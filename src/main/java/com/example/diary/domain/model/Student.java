@@ -3,7 +3,7 @@ package com.example.diary.domain.model;
 import lombok.Data;
 
 @Data
-public class User {
+public class Student {
     private String studentId;
     private String classCode;
     private String studentName;
