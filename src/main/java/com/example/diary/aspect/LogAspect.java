@@ -1,16 +1,47 @@
 package com.example.diary.aspect;
 
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LogAspect {
 
-    @Before("execution(* *..*.*Controller.*(..))")
-    public void startLog(JoinPoint joinPoint){
-        System.out.println("メソッド開始" +joinPoint.getSignature());
+    @Around("execution(* *..*.*Controller.*(..))")
+    public Object startLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("メソッド開始" + joinPoint.getSignature());
+
+        try {
+            Object result = joinPoint.proceed();
+
+            System.out.println("メソッド終了" + joinPoint.getSignature());
+
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("メソッド異常終了" + joinPoint.getSignature();
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Around("execution(* *..*.*UserDao*.*(..))")
+    public Object daoLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("メソッド開始" + joinPoint.getSignature());
+
+        try {
+            Object result = joinPoint.proceed();
+
+            System.out.println("メソッド終了" + joinPoint.getSignature());
+
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("メソッド異常終了" + joinPoint.getSignature();
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
