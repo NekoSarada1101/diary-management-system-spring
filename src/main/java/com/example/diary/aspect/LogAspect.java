@@ -21,7 +21,7 @@ public class LogAspect {
             return result;
 
         } catch (Exception e) {
-            System.out.println("メソッド異常終了" + joinPoint.getSignature();
+            System.out.println("メソッド異常終了" + joinPoint.getSignature());
             e.printStackTrace();
             throw e;
         }
@@ -39,7 +39,7 @@ public class LogAspect {
             return result;
 
         } catch (Exception e) {
-            System.out.println("メソッド異常終了" + joinPoint.getSignature();
+            System.out.println("メソッド異常終了" + joinPoint.getSignature());
             e.printStackTrace();
             throw e;
         }
