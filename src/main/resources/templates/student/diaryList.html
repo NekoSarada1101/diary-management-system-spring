@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>日誌一覧</title>
+</head>
+<body>
+<div th:fragment="diaryList_contents">
+  <h1>日誌管理画面</h1>
+  <table class="table table-responsive table-striped">
+    <thead>
+    <tr>
+      <th>登録日</th>
+      <th>良い点</th>
+      <th>悪い点</th>
+      <th>学生コメント</th>
+      <th>教員コメント</th>
+    </tr>
+    <tr th:each="diary:${diaryList}">
+      <td th:text="${diary.insertDate}"></td>
+      <td th:text="${diary.goodPoint}"></td>
+      <td th:text="${diary.badPoint}"></td>
+      <td th:text="${diary.studentComment}"></td>
+      <td th:text="${diary.teacherComment}"></td>
+    </tr>
+    </thead>
+  </table>
+</div>
+</body>
+</html>
