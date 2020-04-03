@@ -19,6 +19,7 @@ public class DiaryManageController {
     @GetMapping("/diaryManage")
     public String getDiaryManage(Model model) {
         model.addAttribute("contents", "student/diaryList :: diaryList_contents");
+        model.addAttribute("title", "日誌管理");
 
         List<Diary> diaryList = diaryService.fetchDiaryAll();
 
