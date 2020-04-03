@@ -15,6 +15,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String postLogin(Model model) {
+        model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
         return "student/main";
     }
 }

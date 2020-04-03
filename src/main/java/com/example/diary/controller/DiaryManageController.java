@@ -24,7 +24,7 @@ public class DiaryManageController {
 
         model.addAttribute("diaryList", diaryList);
 
-        return "student/diaryManage";
+        return "student/main";
     }
 
     @PostMapping("/diaryManage")
