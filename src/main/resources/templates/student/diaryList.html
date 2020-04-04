@@ -5,25 +5,27 @@
   <title>日誌一覧</title>
 </head>
 <body>
-<div th:fragment="diaryList_contents" class="text-center">
+<div th:fragment="diaryList_contents">
   <h1>日誌管理画面</h1>
-  <table class="table table-responsive table-striped">
+  <table class="table table-striped table-hover">
     <thead>
-    <tr>
-      <th>登録日</th>
-      <th>良い点</th>
-      <th>悪い点</th>
-      <th>学生コメント</th>
-      <th>教員コメント</th>
-    </tr>
-    <tr th:each="diary:${diaryList}">
-      <td th:text="${diary.insertDate}"></td>
-      <td th:text="${diary.goodPoint}"></td>
-      <td th:text="${diary.badPoint}"></td>
-      <td th:text="${diary.studentComment}"></td>
-      <td th:text="${diary.teacherComment}"></td>
+    <tr class="row">
+      <th scope="col" class="col-2">登録日</th>
+      <th scope="col" class="col-2">良い点</th>
+      <th scope="col" class="col-2">悪い点</th>
+      <th scope="col" class="col-3">学生コメント</th>
+      <th scope="col" class="col-3">教員コメント</th>
     </tr>
     </thead>
+    <tbody>
+    <tr th:each="diary:${diaryList}" class="row">
+      <td scope="row" th:text="${diary.insertDate}" class="col-2"></td>
+      <td th:text="${diary.goodPoint}" class="col-2"></td>
+      <td th:text="${diary.badPoint}" class="col-2"></td>
+      <td th:text="${diary.studentComment}" class="col-3"></td>
+      <td th:text="${diary.teacherComment}" class="col-3"></td>
+    </tr>
+    </tbody>
   </table>
 </div>
 </body>
