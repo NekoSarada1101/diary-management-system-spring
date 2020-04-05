@@ -1,0 +1,21 @@
+package com.example.diary.controller;
+
+import com.example.diary.domain.service.DiaryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class DiaryInsertController {
+
+    @Autowired
+    DiaryService diaryService;
+
+    @GetMapping("/diaryInsert")
+    public String getDiaryInsert(Model model) {
+        model.addAttribute("contents", "student/diaryInsert :: diaryInsert_contents");
+        model.addAttribute("title", "日誌登録");
+        return "student/main";
+    }
+}
