@@ -8,8 +8,13 @@
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}">
   <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
   <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+
+  <link rel="stylesheet" href="css/common.css">
 </head>
 <body class="container-fluid">
+<header class="bg-dark text-white">
+  <h1>クラス日誌管理システム</h1>
+</header>
 <div th:include="__${contents}__" class="col-12"></div>
 </body>
 </html>
