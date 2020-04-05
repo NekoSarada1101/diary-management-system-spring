@@ -6,15 +6,19 @@
 </head>
 <body>
 <div th:fragment="diaryList_contents">
-  <h1>日誌管理画面</h1>
+  <h3>日誌管理画面</h3>
+  <div class="text-right">
+    <button type="submit" class="col-5 mb-5 btn btn-primary btn-lg">日誌登録</button>
+  </div>
   <table class="table table-striped table-hover">
     <thead>
     <tr class="row">
       <th scope="col" class="col-2">登録日</th>
       <th scope="col" class="col-2">良い点</th>
       <th scope="col" class="col-2">悪い点</th>
-      <th scope="col" class="col-3">学生コメント</th>
-      <th scope="col" class="col-3">教員コメント</th>
+      <th scope="col" class="col-2">学生コメント</th>
+      <th scope="col" class="col-2">教員コメント</th>
+      <th scope="col" class="col-2"></th>
     </tr>
     </thead>
     <tbody>
@@ -22,8 +26,12 @@
       <td scope="row" th:text="${diary.insertDate}" class="col-2"></td>
       <td th:text="${diary.goodPoint}" class="col-2"></td>
       <td th:text="${diary.badPoint}" class="col-2"></td>
-      <td th:text="${diary.studentComment}" class="col-3"></td>
-      <td th:text="${diary.teacherComment}" class="col-3"></td>
+      <td th:text="${diary.studentComment}" class="col-2"></td>
+      <td th:text="${diary.teacherComment}" class="col-2"></td>
+      <td class="col-2">
+        <button type="submit" class="btn btn-secondary">修正</button>
+        <button type="submit" class="btn btn-danger">削除</button>
+      </td>
     </tr>
     </tbody>
   </table>
