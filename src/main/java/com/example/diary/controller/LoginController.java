@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LoginController {
 
+    @Autowired
+    StudentService studentService;
+
     @GetMapping("/login")
     public String getLogin(Model model) {
         return "login";

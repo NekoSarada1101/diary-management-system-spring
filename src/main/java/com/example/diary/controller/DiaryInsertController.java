@@ -25,4 +25,11 @@ public class DiaryInsertController {
         model.addAttribute("title", "日誌登録確認");
         return "student/main";
     }
+
+    @GetMapping("/diaryInsertComplete")
+    public String getDiaryInsertComplete(Model model){
+        model.addAttribute("contents", "student/diaryInsertComplete :: diaryInsertComplete_contents");
+        model.addAttribute("title", "日誌登録完了");
+        return "student/main";
+    }
 }
