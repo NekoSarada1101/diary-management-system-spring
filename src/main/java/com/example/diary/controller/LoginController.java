@@ -1,8 +1,13 @@
 package com.example.diary.controller;
 
+import com.example.diary.domain.model.LoginForm;
+import com.example.diary.domain.model.Student;
+import com.example.diary.domain.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -12,14 +17,19 @@ public class LoginController {
     StudentService studentService;
 
     @GetMapping("/login")
-    public String getLogin(Model model) {
+    public String getLogin(@ModelAttribute LoginForm loginForm, Model model) {
         return "login";
     }
 
     @PostMapping("/login")
-    public String postLogin(Model model) {
+    public String postLogin(@ModelAttribute LoginForm loginForm, Model model) {
         model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
-        model.addAttribute("title","学生メニュー");
+        model.addAttribute("title", "学生メニュー");
+
+        Student student = studentService.login(loginForm.getId(), loginForm.getPassword());
+
+        model.addAttribute("studentInfo", student);
+
         return "student/main";
     }
 }
