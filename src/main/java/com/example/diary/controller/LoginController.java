@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
@@ -22,13 +24,13 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute LoginForm loginForm, Model model) {
+    public String postLogin(@ModelAttribute LoginForm loginForm, Model model, HttpSession session) {
         model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
         model.addAttribute("title", "学生メニュー");
 
-        Student student = studentService.login(loginForm.getId(), loginForm.getPassword());
+        Student student = studentService.login(loginForm.getStudentId(), loginForm.getStudentPassword());
 
-        model.addAttribute("studentInfo", student);
+        session.setAttribute("student", student);
 
         return "student/main";
     }

@@ -15,11 +15,11 @@
   <p th:if="${session['SPRING SECURITY LAST EXCEPTION']} != null" th:text="${session['SPRING SECURITY LAST EXCEPTION'].message}" class="text-danger"></p>
 
   <label>ユーザーID</label>
-  <input type="text" name="userId" th:field="*{id}">
+  <input type="text" name="studentId" th:field="*{studentId}">
   <br>
   <br>
   <label>パスワード</label>
-  <input type="password" name="password" th:field="*{password}">
+  <input type="password" name="studentPassword" th:field="*{studentPassword}">
   <br>
   <br>
   <button class="btn btn-primary" type="submit">ログイン</button>
