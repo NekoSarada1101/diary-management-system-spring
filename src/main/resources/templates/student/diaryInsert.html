@@ -7,15 +7,15 @@
 <body>
 <div th:fragment="diaryInsert_contents">
   <h3>日誌登録</h3>
-  <form action="/diaryInsertCheck" method="get">
+  <form action="/diaryInsertCheck" method="post" th:object="${diaryInsertForm}">
     <label>良い点</label>
-    <input type="text">
+    <input type="text" th:field="*{goodPoint}">
 
     <label>悪い点</label>
-    <input type="text">
+    <input type="text" th:field="*{badPoint}">
 
     <label>コメント</label>
-    <input type="text">
+    <input type="text" th:field="*{studentComment}">
 
     <button type="submit" class="btn btn-primary">登録</button>
   </form>

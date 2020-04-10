@@ -13,7 +13,11 @@ public class DiaryService {
     @Autowired
     DiaryDao diaryDao;
 
-    public List<Diary> fetchDiaryAll(){
+    public List<Diary> fetchDiaryAll() {
         return diaryDao.fetchDiaryAll();
+    }
+
+    public int insertDiary(Diary diary) {
+        return diaryDao.insertDiary(diary);
     }
 }

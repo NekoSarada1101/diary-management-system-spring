@@ -27,7 +27,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
             Diary diary = new Diary();
 
             diary.setClassCode((String) map.get("class_code"));
-            diary.setInsertDate((Date) map.get("insert_date"));
+            diary.setInsertDate(((Date) map.get("insert_date")).toString());
             diary.setStudentId((String) map.get("student_id"));
             diary.setGoodPoint((String) map.get("good_point"));
             diary.setBadPoint((String) map.get("bad_point"));
@@ -40,5 +40,10 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return diaryList;
     }
 
+    public int insertDiary(Diary diary) throws DataAccessException {
+        int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(),diary.getStudentId() ,diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
+
+        return row;
+    }
 
 }

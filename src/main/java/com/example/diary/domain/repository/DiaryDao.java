@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DiaryDao {
     public List<Diary> fetchDiaryAll() throws DataAccessException;
+
+    public int insertDiary(Diary diary) throws DataAccessException;
 }
