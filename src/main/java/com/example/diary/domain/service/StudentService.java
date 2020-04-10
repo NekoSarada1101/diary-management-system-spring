@@ -12,6 +12,6 @@ public class StudentService {
     StudentDao studentDao;
 
     public Student login(String studentId, String password) {
-        return login(studentId, password);
+        return studentDao.login(studentId, password);
     }
 }
