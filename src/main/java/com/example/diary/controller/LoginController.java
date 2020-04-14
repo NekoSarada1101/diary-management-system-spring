@@ -1,5 +1,6 @@
 package com.example.diary.controller;
 
+import com.example.diary.domain.model.GroupOrder;
 import com.example.diary.domain.model.LoginForm;
 import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.StudentService;
@@ -26,7 +27,7 @@ public class LoginController {
     }
 
     @PostMapping("/auth")
-    public String postLogin(@ModelAttribute @Validated LoginForm loginForm, BindingResult bindingResult, Model model, HttpSession session) {
+    public String postLogin(@ModelAttribute @Validated(GroupOrder.class) LoginForm loginForm, BindingResult bindingResult, Model model, HttpSession session) {
         model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
         model.addAttribute("title", "学生メニュー");
 

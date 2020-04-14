@@ -2,6 +2,7 @@ package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.DiaryInsertForm;
+import com.example.diary.domain.model.GroupOrder;
 import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class DiaryInsertController {
     }
 
     @PostMapping("/diaryInsertCheck")
-    public String postDiaryInsertCheck(@ModelAttribute @Validated DiaryInsertForm diaryInsertForm, BindingResult bindingResult, Model model, HttpSession session) {
+    public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) DiaryInsertForm diaryInsertForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return getDiaryInsert(diaryInsertForm,model);
         }

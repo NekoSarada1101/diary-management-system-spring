@@ -11,19 +11,23 @@
 </head>
 <body class="text-center">
 <h1>Login</h1>
-<form action="/login" method="post" th:object="${loginForm}">
-  <p th:if="${session['SPRING SECURITY LAST EXCEPTION']} != null" th:text="${session['SPRING SECURITY LAST EXCEPTION'].message}" class="text-danger"></p>
+<form action="/auth" method="post" th:object="${loginForm}">
 
-  <label>ユーザーID</label>
-  <input type="text" name="studentId" th:field="*{studentId}">
+  <div class="form-group" th:classappend="${#fields.hasErrors('studentId')}?'has-error'">
+    <label>ユーザーID</label>
+    <input type="text" name="studentId" th:field="*{studentId}" maxlength="7" required>
+    <span class="text-danger" th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}"></span>
+  </div>
   <br>
   <br>
-  <label>パスワード</label>
-  <input type="password" name="studentPassword" th:field="*{studentPassword}">
+  <div class="form-group" th:classappend="${#fields.hasErrors('studentPassword')}?'has-error'">
+    <label>パスワード</label>
+    <input type="password" name="studentPassword" th:field="*{studentPassword}" maxlength="128" required>
+    <span class="text-danger" th:if="${#fields.hasErrors('studentPassword')}" th:errors="*{studentPassword}"></span>
+  </div>
   <br>
   <br>
   <button class="btn btn-primary" type="submit">ログイン</button>
 </form>
-<br>
 </body>
 </html>
