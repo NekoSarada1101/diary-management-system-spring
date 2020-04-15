@@ -6,28 +6,31 @@
 </head>
 <body>
 <div th:fragment="diaryInsert_contents">
-  <h3>日誌登録</h3>
-  <form action="/diaryInsertCheck" method="post" th:object="${diaryInsertForm}">
-    <div class="form-group" th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'">
-      <label>良い点</label>
-      <input type="text" th:field="*{goodPoint}" maxlength="30" required>
-      <span class="text-danger" th:if="${#fields.hasErrors('goodPoint')}" th:errors="*{goodPoint}"></span>
-    </div>
+  <h3 class="text-center mb-3">日誌登録</h3>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('badPoint')}?'has-error'">
-      <label>悪い点</label>
-      <input type="text" th:field="*{badPoint}" maxlength="30" required>
-      <span class="text-danger" th:if="${#fields.hasErrors('badPoint')}" th:errors="*{badPoint}"></span>
-    </div>
+  <div class="col-6 col-sm-5 col-md-4 col-lg-3 mr-auto ml-auto pt-5">
+    <form action="/diaryInsertCheck" method="post" th:object="${diaryInsertForm}">
+      <div class="form-group" th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'">
+        <label>良い点</label>
+        <input type="text" th:field="*{goodPoint}" maxlength="30" required>
+        <span class="text-danger" th:if="${#fields.hasErrors('goodPoint')}" th:errors="*{goodPoint}"></span>
+      </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('studentComment')}?'has-error'">
-      <label>コメント</label>
-      <input type="text" th:field="*{studentComment}" maxlength="30" required>
-      <span class="text-danger" th:if="${#fields.hasErrors('studentComment')}" th:errors="*{studentComment}"></span>
-    </div>
+      <div class="form-group" th:classappend="${#fields.hasErrors('badPoint')}?'has-error'">
+        <label>悪い点</label>
+        <input type="text" th:field="*{badPoint}" maxlength="30" required>
+        <span class="text-danger" th:if="${#fields.hasErrors('badPoint')}" th:errors="*{badPoint}"></span>
+      </div>
 
-    <button type="submit" class="btn btn-primary">登録</button>
-  </form>
+      <div class="form-group" th:classappend="${#fields.hasErrors('studentComment')}?'has-error'">
+        <label>コメント</label>
+        <input type="text" th:field="*{studentComment}" maxlength="30" required>
+        <span class="text-danger" th:if="${#fields.hasErrors('studentComment')}" th:errors="*{studentComment}"></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">登録</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

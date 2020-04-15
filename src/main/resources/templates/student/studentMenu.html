@@ -5,14 +5,16 @@
   <title>学生メニュー</title>
 </head>
 <body>
-<div th:fragment="studentMenu_contents" class="text-center">
-  <form action="diaryManage" method="get">
-    <button type="submit" class="btn btn-primary">日誌管理</button>
-  </form>
+<div th:fragment="studentMenu_contents">
+  <div class="col-6 col-sm-5 col-md-4 col-lg-3 mr-auto ml-auto pt-5">
+    <form action="diaryManage" method="get" class="text-center mb-5">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">日誌管理</button>
+    </form>
 
-  <form action="diaryView" method="get">
-    <button type="submit" class="btn btn-success">日誌閲覧</button>
-  </form>
+    <form action="diaryView" method="get" class="text-center">
+      <button type="submit" class="btn btn-success btn-lg btn-block">日誌閲覧</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>
