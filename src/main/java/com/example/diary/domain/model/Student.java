@@ -7,5 +7,4 @@ public class Student {
     private String studentId;
     private String classCode;
     private String studentName;
-    private String studentPassword;
 }

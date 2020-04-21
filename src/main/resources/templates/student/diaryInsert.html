@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>日誌登録</title>
+</head>
+
+<body>
+<div th:fragment="diaryInsert_contents">
+  <div class="col-10 col-md-6 col-lg-4 center">
+    <h3 class="text-center mb-5">日誌登録</h3>
+
+    <form action="/diaryInsertCheck" method="post" th:object="${diaryInsertForm}">
+      <div th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'" class="form-group">
+        <label for="goodPoint">良い点</label>
+        <textarea id="goodPoint" th:field="*{goodPoint}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
+        <span th:if="${#fields.hasErrors('goodPoint')}" th:errors="*{goodPoint}" class="text-danger"></span>
+      </div>
+
+      <div th:classappend="${#fields.hasErrors('badPoint')}?'has-error'" class="form-group">
+        <label for="badPoint">悪い点</label>
+        <textarea id="badPoint" th:field="*{badPoint}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
+        <span th:if="${#fields.hasErrors('badPoint')}" th:errors="*{badPoint}" class="text-danger"></span>
+      </div>
+
+      <div th:classappend="${#fields.hasErrors('studentComment')}?'has-error'" class="form-group">
+        <label for="studentComment">学生コメント</label>
+        <textarea id="studentComment" th:field="*{studentComment}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
+        <span th:if="${#fields.hasErrors('studentComment')}" th:errors="*{studentComment}" class="text-danger"></span>
+      </div>
+
+      <button type="submit" class="col-5 btn btn-primary btn-lg mx-auto mb-2 float-right">登録する</button>
+    </form>
+
+    <form action="/diaryManage" method="get">
+      <button type="submit" class="col-5 btn btn-outline-dark btn-lg mx-auto float-left">戻る</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

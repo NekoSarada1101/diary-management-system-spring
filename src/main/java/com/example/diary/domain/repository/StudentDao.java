@@ -4,5 +4,5 @@ import com.example.diary.domain.model.Student;
 import org.springframework.dao.DataAccessException;
 
 public interface StudentDao {
-    public Student login() throws DataAccessException;
+    public Student login(String studentId, String password) throws DataAccessException;
 }
