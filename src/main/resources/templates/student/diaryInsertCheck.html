@@ -6,19 +6,32 @@
 </head>
 <body>
 <div th:fragment="diaryInsertCheck_contents">
-  <h3>日誌登録確認</h3>
-  <form action="/diaryInsertComplete" method="post" th:object="${diaryInsertForm}">
-    <label>良い点</label>
-    <p th:text="*{goodPoint}"></p>
+  <div class="col-10 col-md-6 col-lg-4 center">
+    <h3 class="text-center mb-5">日誌登録確認</h3>
 
-    <label>悪い点</label>
-    <p th:text="*{badPoint}"></p>
+    <form action="/diaryInsertComplete" method="post" th:object="${diaryInsertForm}">
+      <table class="table table-bordered table-striped">
+        <tr class="row">
+          <th class="col-4">良い点</th>
+          <td class="col-8" th:text="*{goodPoint}"></td>
+        </tr>
+        <tr class="row">
+          <th class="col-4">悪い点</th>
+          <td class="col-8" th:text="*{badPoint}"></td>
+        </tr>
+        <tr class="row">
+          <th class="col-4">学生コメント</th>
+          <td class="col-8" th:text="*{studentComment}"></td>
+        </tr>
+      </table>
 
-    <label>コメント</label>
-    <p th:text="*{studentComment}"></p>
+      <button type="submit" class="col-5 btn btn-primary btn-lg mx-auto mb-2 float-right">登録する</button>
+    </form>
 
-    <button type="submit" class="btn btn-primary">登録</button>
-  </form>
+    <form action="/diaryInsert" method="get">
+      <button type="submit" class="col-5 btn btn-outline-dark btn-lg mx-auto float-left">戻る</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

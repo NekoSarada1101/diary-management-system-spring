@@ -6,11 +6,13 @@
 </head>
 <body>
 <div th:fragment="diaryInsertComplete_contents">
-  <h3>日誌登録完了</h3>
-  <form action="/diaryManage" method="get">
+  <div class="col-10 col-md-6 col-lg-4 center">
+    <h3 class="text-center mb-5">日誌登録完了</h3>
 
-    <button type="submit" class="btn btn-primary">トップへ戻る</button>
-  </form>
+    <form action="/diaryManage" method="get" class="text-center">
+      <button type="submit" class="col-5 btn btn-primary btn-lg">トップへ戻る</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

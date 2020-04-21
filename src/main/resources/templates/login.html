@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta charset="UTF-8">
   <title>ログイン</title>
 
@@ -12,29 +14,31 @@
   <link rel="stylesheet" href="css/common.css">
 </head>
 <body class="container-fluid">
-<header class="bg-dark text-white pl-2 pt-1 pb-1 mb-3">
+<header class="bg-dark text-white pl-2 py-1 mb-3">
   <h1>クラス日誌管理システム</h1>
 </header>
 
-<h1 class="text-center mb-3">ログイン</h1>
+<div class="col-6 col-sm-5 col-md-4 col-lg-3 center">
+  <h1 class="text-center mb-5">ログイン</h1>
 
-<form action="/auth" method="post" th:object="${loginForm}" class="col-6 col-sm-5 col-md-4 col-lg-3 mr-auto ml-auto">
-  <div class="form-group mb-3" th:classappend="${#fields.hasErrors('studentId')}?'has-error'">
-    <label>ユーザーID</label>
-    <input type="text" name="studentId" th:field="*{studentId}" class="form-control" maxlength="7" required>
-    <span class="text-danger" th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}"></span>
-  </div>
+  <form action="/auth" method="post" th:object="${loginForm}">
+    <div th:classappend="${#fields.hasErrors('studentId')}?'has-error'" class="form-group mb-3">
+      <label for="id">ユーザーID</label>
+      <input id="id" type="text" name="studentId" th:field="*{studentId}" class="form-control" maxlength="7" required>
+      <span th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}" class="text-danger"></span>
+    </div>
 
-  <div class="form-group mb-5" th:classappend="${#fields.hasErrors('studentPassword')}?'has-error'">
-    <label>パスワード</label>
-    <input type="password" name="studentPassword" th:field="*{studentPassword}" class="form-control" maxlength="128"
-           required>
-    <span class="text-danger" th:if="${#fields.hasErrors('studentPassword')}" th:errors="*{studentPassword}"></span>
-  </div>
+    <div th:classappend="${#fields.hasErrors('studentPassword')}?'has-error'" class="form-group mb-5">
+      <label for="password">パスワード</label>
+      <input id="password" type="password" name="studentPassword" th:field="*{studentPassword}" maxlength="128"
+             class="form-control" required>
+      <span th:if="${#fields.hasErrors('studentPassword')}" th:errors="*{studentPassword}" class="text-danger"></span>
+    </div>
 
-  <div class="text-center">
-    <button class="btn btn-primary btn-lg mr-auto ml-auto" type="submit">ログイン</button>
-  </div>
-</form>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg" type="submit">ログイン</button>
+    </div>
+  </form>
+</div>
 </body>
 </html>
