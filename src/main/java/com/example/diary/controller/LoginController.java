@@ -28,9 +28,6 @@ public class LoginController {
 
     @PostMapping("/auth")
     public String postLogin(@ModelAttribute @Validated(GroupOrder.class) LoginForm loginForm, BindingResult bindingResult, Model model, HttpSession session) {
-        model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
-        model.addAttribute("title", "学生メニュー");
-
         if(bindingResult.hasErrors()){
             return getLogin(loginForm, model);
         }
@@ -39,6 +36,6 @@ public class LoginController {
 
         session.setAttribute("student", student);
 
-        return "student/main";
+        return "redirect:/studentMenu";
     }
 }
