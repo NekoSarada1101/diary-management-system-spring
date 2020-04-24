@@ -20,6 +20,8 @@ public class DiaryManageController {
 
     @GetMapping("/diaryManage")
     public String getDiaryManage(Model model, HttpSession session) {
+    @PostMapping("/diaryManage")
+    public String postDiaryManage(@ModelAttribute DiaryManageSortForm diaryManageSortForm, Model model, HttpSession session) {
         model.addAttribute("contents", "student/diaryList :: diaryList_contents");
         model.addAttribute("title", "日誌管理");
 
