@@ -27,6 +27,8 @@ public class DiaryManageController {
 
         List<Diary> diaryList = diaryService.fetchDiaryAll();
 
+        //ソートした日誌リスト取得
+        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder);
         model.addAttribute("diaryList", diaryList);
 
         //今日の日付を取得

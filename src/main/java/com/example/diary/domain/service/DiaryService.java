@@ -13,8 +13,8 @@ public class DiaryService {
     @Autowired
     DiaryDao diaryDao;
 
-    public List<Diary> fetchDiaryAll() {
-        return diaryDao.fetchDiaryAll();
+    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) {
+        return diaryDao.fetchSortDiaryList(sortOptionCol, sortOptionOrder);
     }
 
     public int insertDiary(Diary diary) {
