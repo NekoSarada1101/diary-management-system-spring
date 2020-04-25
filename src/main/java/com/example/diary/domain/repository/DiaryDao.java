@@ -8,5 +8,7 @@ import java.util.List;
 public interface DiaryDao {
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException;
 
+    public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) throws DataAccessException;
+
     public int insertDiary(Diary diary) throws DataAccessException;
 }

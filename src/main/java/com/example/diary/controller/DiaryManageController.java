@@ -1,11 +1,14 @@
 package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
+import com.example.diary.domain.model.DiarySearchForm;
 import com.example.diary.domain.model.DiarySortForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,8 +25,10 @@ public class DiaryManageController {
     @Autowired
     DiaryService diaryService;
 
+    //日誌管理画面/ソート
     @PostMapping("/diaryManage")
-    public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, Model model, HttpSession session) {
+    public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
+
         model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
         model.addAttribute("title", "日誌管理");
 
@@ -50,6 +55,36 @@ public class DiaryManageController {
         Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
+
+        return "student/main";
+    }
+
+    //検索
+    @PostMapping("/diaryManageSearch")
+    public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
+
+        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
+        model.addAttribute("title", "日誌管理");
+
+        //selectBoxのoptionの値を設定
+        Map<String, String> selectColMap = createSelectBoxOptionCol();
+        Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
+        model.addAttribute("sortOptionCol", selectColMap);
+        model.addAttribute("sortOptionOrder", selectOrderMap);
+
+        if (bindingResult.hasErrors()) {
+            //ソートした日誌リスト取得
+            List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc");
+            model.addAttribute("diaryList", diaryList);
+
+            return "student/main";
+        }
+
+        String searchWord = diarySearchForm.getSearchWord();
+
+        //検索した日誌リスト取得
+        List<Diary> diaryList = diaryService.fetchSearchDiaryList(searchWord, "diaryManage");
+        model.addAttribute("diaryList", diaryList);
 
         return "student/main";
     }

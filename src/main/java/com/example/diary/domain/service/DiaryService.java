@@ -17,6 +17,10 @@ public class DiaryService {
         return diaryDao.fetchSortDiaryList(sortOptionCol, sortOptionOrder);
     }
 
+    public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) {
+        return diaryDao.fetchSearchDiaryList(searchWord, fromWhere);
+    }
+
     public int insertDiary(Diary diary) {
         return diaryDao.insertDiary(diary);
     }
