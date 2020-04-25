@@ -23,15 +23,16 @@ public class DiaryManageController {
     DiaryService diaryService;
 
     @PostMapping("/diaryManage")
-    public String postDiaryManage(@ModelAttribute DiaryManageSortForm diaryManageSortForm, Model model, HttpSession session) {
-        model.addAttribute("contents", "student/diaryList :: diaryList_contents");
+    public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, Model model, HttpSession session) {
+        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
         model.addAttribute("title", "日誌管理");
 
         //選択されたselectBoxのoptionの値を取得
-        String sortOptionCol = diaryManageSortForm.getSortOptionCol();
-        String sortOptionOrder = diaryManageSortForm.getSortOptionOrder();
+        String sortOptionCol = diarySortForm.getSortOptionCol();
+        String sortOptionOrder = diarySortForm.getSortOptionOrder();
 
         //無ければこの値を取得
+        //初期表示
         if (sortOptionCol == null) sortOptionCol = "insert_date";
         if (sortOptionOrder == null) sortOptionOrder = "desc";
 

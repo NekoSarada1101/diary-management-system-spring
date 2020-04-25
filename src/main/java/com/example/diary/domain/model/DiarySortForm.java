@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class DiaryManageSortForm {
+public class DiarySortForm {
 
     @NotBlank
     private String sortOptionCol;
