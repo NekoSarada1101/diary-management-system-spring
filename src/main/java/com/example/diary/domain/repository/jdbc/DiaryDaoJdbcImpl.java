@@ -72,6 +72,35 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return true;
     }
 
+    //検索
+    public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) {
+        searchWord = "%" + searchWord + "%";
+        String sql;
+        List<Map<String, Object>> fetchDiaryList = null;
+        if (fromWhere.equals("diaryManage")) {
+            sql = "SELECT * FROM diary WHERE insert_date LIKE ? OR good_point LIKE ? OR bad_point LIKE ? OR student_comment LIKE ?";
+            fetchDiaryList = jdbcTemplate.queryForList(sql, searchWord, searchWord, searchWord, searchWord);
+        }
+
+        List<Diary> diaryList = new ArrayList<>();
+
+        for (Map<String, Object> map : fetchDiaryList) {
+            Diary diary = new Diary();
+
+            diary.setClassCode((String) map.get("class_code"));
+            diary.setInsertDate(((Date) map.get("insert_date")).toString());
+            diary.setStudentId((String) map.get("student_id"));
+            diary.setGoodPoint((String) map.get("good_point"));
+            diary.setBadPoint((String) map.get("bad_point"));
+            diary.setStudentComment((String) map.get("student_comment"));
+            diary.setTeacherComment((String) map.get("teacher_comment"));
+
+            System.out.println(diary.getInsertDate());
+            diaryList.add(diary);
+        }
+
+        return diaryList;
+    }
     public int insertDiary(Diary diary) throws DataAccessException {
         int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(), diary.getStudentId(), diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
 
