@@ -18,8 +18,14 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Diary> fetchDiaryAll() throws DataAccessException {
-        List<Map<String, Object>> fetchDiaryList = jdbcTemplate.queryForList("SELECT * FROM diary");
+    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException {
+        //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
+        boolean hasAllowed = hasAllowedValueForStudent(sortOptionCol, sortOptionOrder);
+        if (!hasAllowed){
+            return null;
+        }
+
+        List<Map<String, Object>> fetchDiaryList = jdbcTemplate.queryForList("SELECT * FROM diary ORDER BY " + sortOptionCol + " " + sortOptionOrder);
 
         List<Diary> diaryList = new ArrayList<>();
 
@@ -40,8 +46,34 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return diaryList;
     }
 
+    public boolean hasAllowedValueForStudent(String sortOptionCol, String sortOptionOrder) {
+        switch (sortOptionCol) {
+            case "insert_date":
+                break;
+            case "good_point":
+                break;
+            case "bad_point":
+                break;
+            case "student_comment":
+                break;
+            default:
+                return false;
+        }
+
+        switch (sortOptionOrder) {
+            case "asc":
+                break;
+            case "desc":
+                break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
+
     public int insertDiary(Diary diary) throws DataAccessException {
-        int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(),diary.getStudentId() ,diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
+        int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(), diary.getStudentId(), diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
 
         return row;
     }
