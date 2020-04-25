@@ -1,7 +1,7 @@
 package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
-import com.example.diary.domain.model.DiaryManageSortForm;
+import com.example.diary.domain.model.DiarySortForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,6 @@ public class DiaryManageController {
         String sortOptionCol = diarySortForm.getSortOptionCol();
         String sortOptionOrder = diarySortForm.getSortOptionOrder();
 
-        //無ければこの値を取得
         //初期表示
         if (sortOptionCol == null) sortOptionCol = "insert_date";
         if (sortOptionOrder == null) sortOptionOrder = "desc";
@@ -56,7 +55,6 @@ public class DiaryManageController {
     }
 
     public Map<String, String> createSelectBoxOptionCol() {
-        //selectboxの選択肢を指定
         Map<String, String> selectColMap = new LinkedHashMap<>();
         selectColMap.put("insert_date", "登録日");
         selectColMap.put("good_point", "良い点");

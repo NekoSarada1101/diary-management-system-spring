@@ -19,6 +19,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     JdbcTemplate jdbcTemplate;
 
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException {
+        //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
         boolean hasAllowed = hasAllowedValueForStudent(sortOptionCol, sortOptionOrder);
         if (!hasAllowed){
             return null;
@@ -45,8 +46,8 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return diaryList;
     }
 
-    public boolean hasAllowedValueForStudent(String sortCol, String sortOrder) {
-        switch (sortCol) {
+    public boolean hasAllowedValueForStudent(String sortOptionCol, String sortOptionOrder) {
+        switch (sortOptionCol) {
             case "insert_date":
                 break;
             case "good_point":
@@ -59,7 +60,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
                 return false;
         }
 
-        switch (sortOrder) {
+        switch (sortOptionOrder) {
             case "asc":
                 break;
             case "desc":
