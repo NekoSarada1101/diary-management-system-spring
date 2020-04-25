@@ -10,10 +10,12 @@
   <div class="col-12 col-lg-8 mx-auto">
     <h3 class="text-center mb-5">日誌管理画面</h3>
 
+    <!--日誌登録-->
     <form action="/diaryInsert" method="get" class="text-right mb-3">
       <button type="submit" class="col-12 col-md-6 btn btn-primary btn-lg">日誌登録</button>
     </form>
 
+    <!--ソート-->
     <form action="/diaryManage" method="post" th:object="${diarySortForm}" class="row mb-3">
       <select th:field="*{sortOptionCol}" class="col-5 custom-select m-0">
         <option th:each="items:${sortOptionCol}" th:value="${items.key}" th:text="${items.value}"></option>
@@ -32,6 +34,8 @@
       <button type="submit" class="col-2 btn btn-primary m-0">検索</button>
       <span th:if="${#fields.hasErrors('searchWord')}" th:errors="*{searchWord}" class="text-danger"></span>
     </form>
+
+    <!--日誌リスト-->
     <table th:each="diary:${diaryList}" class="table table-hover table-bordered shadow-sm mb-5">
       <tr class="row">
         <th class="col-4">登録日</th>

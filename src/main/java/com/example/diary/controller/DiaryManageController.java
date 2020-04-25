@@ -25,6 +25,7 @@ public class DiaryManageController {
     @Autowired
     DiaryService diaryService;
 
+    //日誌管理画面/ソート
     @PostMapping("/diaryManage")
     public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
 

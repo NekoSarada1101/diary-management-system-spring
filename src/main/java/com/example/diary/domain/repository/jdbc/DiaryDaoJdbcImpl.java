@@ -18,10 +18,11 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    //ソート
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException {
         //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
         boolean hasAllowed = hasAllowedValueForStudent(sortOptionCol, sortOptionOrder);
-        if (!hasAllowed){
+        if (!hasAllowed) {
             return null;
         }
 
@@ -101,6 +102,8 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
 
         return diaryList;
     }
+
+    //登録
     public int insertDiary(Diary diary) throws DataAccessException {
         int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(), diary.getStudentId(), diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
 
