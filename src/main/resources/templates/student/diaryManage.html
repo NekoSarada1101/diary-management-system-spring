@@ -26,6 +26,12 @@
       <button type="submit" class="col-2 btn btn-primary m-0">ソート</button>
     </form>
 
+    <!--検索-->
+    <form action="/diaryManageSearch" method="post" th:object="${diarySearchForm}" class="row form-group mb-3">
+      <input type="text" th:field="*{searchWord}" placeholder="検索したいワードを入力してください" class="col-10 form-control m-0" required>
+      <button type="submit" class="col-2 btn btn-primary m-0">検索</button>
+      <span th:if="${#fields.hasErrors('searchWord')}" th:errors="*{searchWord}" class="text-danger"></span>
+    </form>
     <table th:each="diary:${diaryList}" class="table table-hover table-bordered shadow-sm mb-5">
       <tr class="row">
         <th class="col-4">登録日</th>
