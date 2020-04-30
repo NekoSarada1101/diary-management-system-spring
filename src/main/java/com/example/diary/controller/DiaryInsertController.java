@@ -1,7 +1,7 @@
 package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
-import com.example.diary.domain.model.DiaryInsertForm;
+import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.model.GroupOrder;
 import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.DiaryService;
@@ -23,29 +23,28 @@ public class DiaryInsertController {
     DiaryService diaryService;
 
     @GetMapping("/diaryInsert")
-    public String getDiaryInsert(@ModelAttribute DiaryInsertForm diaryInsertForm, Model model) {
+    public String getDiaryInsert(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
         model.addAttribute("contents", "student/diaryInsert :: diaryInsert_contents");
         model.addAttribute("title", "日誌登録");
         return "student/main";
     }
 
     @PostMapping("/diaryInsertCheck")
-    public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) DiaryInsertForm diaryInsertForm, BindingResult bindingResult, Model model, HttpSession session) {
+    public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return getDiaryInsert(diaryInsertForm,model);
+            return getDiaryInsert(studentDiaryForm,model);
         }
 
         model.addAttribute("contents", "student/diaryInsertCheck :: diaryInsertCheck_contents");
         model.addAttribute("title", "日誌登録確認");
 
-
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
         diary.setInsertDate((String) session.getAttribute("today"));
         diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
-        diary.setGoodPoint(diaryInsertForm.getGoodPoint());
-        diary.setBadPoint(diaryInsertForm.getBadPoint());
-        diary.setStudentComment(diaryInsertForm.getStudentComment());
+        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
+        diary.setBadPoint(studentDiaryForm.getBadPoint());
+        diary.setStudentComment(studentDiaryForm.getStudentComment());
 
         System.out.println(diary.getClassCode());
         System.out.println(diary.getInsertDate());

@@ -10,7 +10,7 @@
   <div class="col-10 col-md-6 col-lg-4 center">
     <h3 class="text-center mb-5">日誌登録</h3>
 
-    <form action="/diaryInsertCheck" method="post" th:object="${diaryInsertForm}">
+    <form action="/diaryInsertCheck" method="post" th:object="${studentDiaryForm}">
       <div th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'" class="form-group">
         <label for="goodPoint">良い点</label>
         <textarea id="goodPoint" th:field="*{goodPoint}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
