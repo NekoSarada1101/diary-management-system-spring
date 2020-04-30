@@ -11,4 +11,6 @@ public interface DiaryDao {
     public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) throws DataAccessException;
 
     public int insertDiary(Diary diary) throws DataAccessException;
+
+    public void updateDiary(Diary diary) throws DataAccessException;
 }

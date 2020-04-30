@@ -24,4 +24,8 @@ public class DiaryService {
     public int insertDiary(Diary diary) {
         return diaryDao.insertDiary(diary);
     }
+
+    public void updateDiary(Diary diary) {
+        diaryDao.updateDiary(diary);
+    }
 }
