@@ -105,9 +105,24 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
 
     //登録
     public int insertDiary(Diary diary) throws DataAccessException {
-        int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)", diary.getClassCode(), diary.getInsertDate(), diary.getStudentId(), diary.getGoodPoint(), diary.getBadPoint(), diary.getStudentComment());
+        int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)",
+                diary.getClassCode(),
+                diary.getInsertDate(),
+                diary.getStudentId(),
+                diary.getGoodPoint(),
+                diary.getBadPoint(),
+                diary.getStudentComment());
 
         return row;
     }
 
+    //更新
+    public void updateDiary(Diary diary) throws DataAccessException {
+        jdbcTemplate.update("UPDATE diary SET good_point = ?, bad_point = ?, student_comment = ? WHERE insert_date = ? AND class_code = ?",
+                diary.getGoodPoint(),
+                diary.getBadPoint(),
+                diary.getStudentComment(),
+                diary.getInsertDate(),
+                diary.getClassCode());
+    }
 }

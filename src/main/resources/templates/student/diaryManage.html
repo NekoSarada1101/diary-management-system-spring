@@ -59,7 +59,13 @@
 
       <tr>
         <td class="col-12 text-center" colspan="2">
-          <button type="submit" class="col-4 btn btn-warning text-dark">修正</button>
+          <form action="/diaryUpdateInput" method="get">
+            <input type="hidden" name="insertDate" th:value="${diary.insertDate}">
+            <input type="hidden" name="goodPoint" th:value="${diary.goodPoint}">
+            <input type="hidden" name="badPoint" th:value="${diary.badPoint}">
+            <input type="hidden" name="studentComment" th:value="${diary.studentComment}">
+            <button type="submit" class="col-4 btn btn-warning text-dark">修正</button>
+          </form>
           <button type="submit" class="col-4 btn btn-danger">削除</button>
         </td>
       </tr>
