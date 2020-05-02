@@ -6,9 +6,9 @@
 </head>
 
 <body>
-<div th:fragment="diaryInsert_contents">
+<div th:fragment="diaryInsertInput_contents">
   <div class="col-10 col-md-6 col-lg-4 center">
-    <h3 class="text-center mb-5">日誌登録</h3>
+    <h3 class="text-center mb-5">日誌登録入力</h3>
 
     <form action="/diaryInsertCheck" method="post" th:object="${studentDiaryForm}">
       <div th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'" class="form-group">

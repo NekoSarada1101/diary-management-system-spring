@@ -22,9 +22,9 @@ public class DiaryInsertController {
     @Autowired
     DiaryService diaryService;
 
-    @GetMapping("/diaryInsert")
-    public String getDiaryInsert(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
-        model.addAttribute("contents", "student/diaryInsert :: diaryInsert_contents");
+    @GetMapping("/diaryInsertInput")
+    public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
+        model.addAttribute("contents", "student/diaryInsertInput :: diaryInsertInput_contents");
         model.addAttribute("title", "日誌登録");
         return "student/main";
     }
@@ -32,7 +32,7 @@ public class DiaryInsertController {
     @PostMapping("/diaryInsertCheck")
     public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return getDiaryInsert(studentDiaryForm,model);
+            return getDiaryInsertInput(studentDiaryForm,model);
         }
 
         model.addAttribute("contents", "student/diaryInsertCheck :: diaryInsertCheck_contents");
