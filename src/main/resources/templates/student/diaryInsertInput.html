@@ -11,6 +11,11 @@
     <h3 class="text-center mb-5">日誌登録入力</h3>
 
     <form action="/diaryInsertCheck" method="post" th:object="${studentDiaryForm}">
+      <div>
+        <label for="today">登録日</label>
+        <p id="today" th:text="${today}"></p>
+      </div>
+
       <div th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'" class="form-group">
         <label for="goodPoint">良い点</label>
         <textarea id="goodPoint" th:field="*{goodPoint}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
