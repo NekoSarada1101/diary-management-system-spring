@@ -1,9 +1,9 @@
 package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
-import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.model.GroupOrder;
 import com.example.diary.domain.model.Student;
+import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,16 +23,18 @@ public class DiaryInsertController {
     DiaryService diaryService;
 
     @GetMapping("/diaryInsertInput")
-    public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
+    public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
         model.addAttribute("contents", "student/diaryInsertInput :: diaryInsertInput_contents");
         model.addAttribute("title", "日誌登録");
+
+        model.addAttribute("today", session.getAttribute("today"));
         return "student/main";
     }
 
     @PostMapping("/diaryInsertCheck")
     public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return getDiaryInsertInput(studentDiaryForm,model);
+            return getDiaryInsertInput(studentDiaryForm, model, session);
         }
 
         model.addAttribute("contents", "student/diaryInsertCheck :: diaryInsertCheck_contents");
@@ -52,6 +54,8 @@ public class DiaryInsertController {
         System.out.println(diary.getGoodPoint());
         System.out.println(diary.getBadPoint());
         System.out.println(diary.getStudentComment());
+
+        model.addAttribute("today", session.getAttribute("today"));
 
         session.setAttribute("diary", diary);
         return "student/main";
