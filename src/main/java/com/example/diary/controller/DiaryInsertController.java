@@ -27,7 +27,14 @@ public class DiaryInsertController {
         model.addAttribute("contents", "student/diaryInsertInput :: diaryInsertInput_contents");
         model.addAttribute("title", "日誌登録");
 
-        model.addAttribute("today", session.getAttribute("today"));
+        try {
+            studentDiaryForm.setInsertDate((String) session.getAttribute("today"));
+            studentDiaryForm.setGoodPoint(((Diary) session.getAttribute("diary")).getGoodPoint());
+            studentDiaryForm.setBadPoint(((Diary) session.getAttribute("diary")).getBadPoint());
+            studentDiaryForm.setStudentComment(((Diary) session.getAttribute("diary")).getStudentComment());
+        } catch (NullPointerException e) {
+        }
+
         return "student/main";
     }
 
@@ -42,22 +49,14 @@ public class DiaryInsertController {
 
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate((String) session.getAttribute("today"));
+        diary.setInsertDate(studentDiaryForm.getInsertDate());
         diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
         diary.setGoodPoint(studentDiaryForm.getGoodPoint());
         diary.setBadPoint(studentDiaryForm.getBadPoint());
         diary.setStudentComment(studentDiaryForm.getStudentComment());
 
-        System.out.println(diary.getClassCode());
-        System.out.println(diary.getInsertDate());
-        System.out.println(diary.getStudentId());
-        System.out.println(diary.getGoodPoint());
-        System.out.println(diary.getBadPoint());
-        System.out.println(diary.getStudentComment());
-
-        model.addAttribute("today", session.getAttribute("today"));
-
         session.setAttribute("diary", diary);
+
         return "student/main";
     }
 
