@@ -21,8 +21,9 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     //ソート
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException {
         //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
-        boolean hasAllowed = hasAllowedValueForStudent(sortOptionCol, sortOptionOrder);
-        if (!hasAllowed) {
+        String[] allowedCol = {"insert_date", "good_point", "bad_point", "student_comment"};
+        String[] allowedOrder = {"asc", "desc"};
+        if (!hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder)) {
             return null;
         }
 
@@ -47,27 +48,15 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return diaryList;
     }
 
-    public boolean hasAllowedValueForStudent(String sortOptionCol, String sortOptionOrder) {
-        switch (sortOptionCol) {
-            case "insert_date":
-                break;
-            case "good_point":
-                break;
-            case "bad_point":
-                break;
-            case "student_comment":
-                break;
-            default:
-                return false;
+    public boolean hasAllowedValue(String sortOptionCol, String[] allowedCol, String sortOptionOrder, String[] allowedOrder) {
+        for (int i = 0; i < allowedCol.length; i++) {
+            if (sortOptionCol.equals(allowedCol[i])) break;
+            if (i == allowedCol.length - 1) return false;
         }
 
-        switch (sortOptionOrder) {
-            case "asc":
-                break;
-            case "desc":
-                break;
-            default:
-                return false;
+        for (int i = 0; i < allowedOrder.length; i++) {
+            if (sortOptionOrder.equals(allowedOrder[i])) break;
+            if (i == allowedOrder.length - 1) return false;
         }
 
         return true;
