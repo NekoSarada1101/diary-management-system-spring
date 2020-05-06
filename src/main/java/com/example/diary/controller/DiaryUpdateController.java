@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
@@ -68,7 +67,8 @@ public class DiaryUpdateController {
         model.addAttribute("contents", "student/diaryUpdateComplete :: diaryUpdateComplete_contents");
         model.addAttribute("title", "日誌修正完了");
 
-        diaryService.updateDiary((Diary) session.getAttribute("diary"));
+        int row = diaryService.updateDiary((Diary) session.getAttribute("diary"));
+        System.out.println(row);
 
         return "student/main";
     }
