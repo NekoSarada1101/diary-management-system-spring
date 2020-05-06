@@ -32,6 +32,8 @@ public class DiaryManageController {
         model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
         model.addAttribute("title", "日誌管理");
 
+        session.removeAttribute("diary");
+
         //選択されたselectBoxのoptionの値を取得
         String sortOptionCol = diarySortForm.getSortOptionCol();
         String sortOptionOrder = diarySortForm.getSortOptionOrder();
