@@ -6,14 +6,14 @@
 </head>
 <body>
 <div th:fragment="diaryUpdateCheck_contents">
-  <div class="col-10 col-md-6 col-lg-4 center" th:object="${studentDiaryForm}">
+  <div class="col-10 col-md-6 col-lg-4 center">
     <h3 class="text-center mb-5">日誌修正確認</h3>
 
-    <form action="/diaryUpdateComplete" method="post">
+    <form action="/diaryUpdateComplete" method="post" th:object="${studentDiaryForm}">
       <table class="table table-bordered table-striped">
         <tr class="row">
           <th class="col-4">登録日</th>
-          <td class="col-8" th:text="${insertDate}"></td>
+          <td class="col-8" th:text="*{insertDate}"></td>
         </tr>
         <tr class="row">
           <th class="col-4">良い点</th>
@@ -33,10 +33,6 @@
     </form>
 
     <form action="/diaryUpdateInput" method="get">
-      <input type="hidden" name="insertDate" th:value="${insertDate}">
-      <input type="hidden" name="goodPoint" th:value="*{goodPoint}">
-      <input type="hidden" name="badPoint" th:value="*{badPoint}">
-      <input type="hidden" name="studentComment" th:value="*{studentComment}">
       <button type="submit" class="col-5 btn btn-outline-dark btn-lg mx-auto float-left">戻る</button>
     </form>
   </div>
