@@ -24,23 +24,19 @@ public class DiaryUpdateController {
     DiaryService diaryService;
 
     @GetMapping("/diaryUpdateInput")
-    public String getDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm,
-                                      @RequestParam("insertDate") String insertDate,
-                                      @RequestParam("goodPoint") String goodPoint,
-                                      @RequestParam("badPoint") String badPoint,
-                                      @RequestParam("studentComment") String studentComment,
-                                      Model model,
-                                      HttpSession session) {
+    public String getDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
 
         model.addAttribute("contents", "student/diaryUpdateInput :: diaryUpdateInput_contents");
         model.addAttribute("title", "日誌修正入力");
 
-        model.addAttribute("insertDate", insertDate);
-        model.addAttribute("goodPoint", goodPoint);
-        model.addAttribute("badPoint", badPoint);
-        model.addAttribute("studentComment", studentComment);
-
-        session.setAttribute("insertDate", insertDate);
+        try {
+            studentDiaryForm.setInsertDate(((Diary) session.getAttribute("diary")).getInsertDate());
+            studentDiaryForm.setGoodPoint(((Diary) session.getAttribute("diary")).getGoodPoint());
+            studentDiaryForm.setBadPoint(((Diary) session.getAttribute("diary")).getBadPoint());
+            studentDiaryForm.setStudentComment(((Diary) session.getAttribute("diary")).getStudentComment());
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
 
         return "student/main";
     }
@@ -48,23 +44,22 @@ public class DiaryUpdateController {
     @PostMapping("diaryUpdateCheck")
     public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return getDiaryUpdateInput(studentDiaryForm, (String) session.getAttribute("insertDate"), studentDiaryForm.getGoodPoint(), studentDiaryForm.getBadPoint(), studentDiaryForm.getStudentComment(), model, session);
+            return getDiaryUpdateInput(studentDiaryForm, model, session);
         }
 
         model.addAttribute("contents", "student/diaryUpdateCheck :: diaryUpdateCheck_contents");
         model.addAttribute("title", "日誌修正確認");
 
-        model.addAttribute("insertDate", (String) session.getAttribute("insertDate"));
-
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate((String) session.getAttribute("insertDate"));
+        diary.setInsertDate(studentDiaryForm.getInsertDate());
         diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
         diary.setGoodPoint(studentDiaryForm.getGoodPoint());
         diary.setBadPoint(studentDiaryForm.getBadPoint());
         diary.setStudentComment(studentDiaryForm.getStudentComment());
 
         session.setAttribute("diary", diary);
+
         return "student/main";
     }
 

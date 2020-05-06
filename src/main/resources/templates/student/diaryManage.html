@@ -59,7 +59,7 @@
 
       <tr>
         <td class="col-12 text-center" colspan="2">
-          <form action="/diaryUpdateInput" method="get">
+          <form action="/diaryUpdateInput" method="get" th:object="${studentDiaryForm}">
             <input type="hidden" name="insertDate" th:value="${diary.insertDate}">
             <input type="hidden" name="goodPoint" th:value="${diary.goodPoint}">
             <input type="hidden" name="badPoint" th:value="${diary.badPoint}">

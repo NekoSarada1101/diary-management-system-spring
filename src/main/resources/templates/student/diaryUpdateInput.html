@@ -12,7 +12,8 @@
     <form action="/diaryUpdateCheck" method="post" th:object="${studentDiaryForm}">
       <div class="form-group">
         <label for="insertDate">登録日</label>
-        <p id="insertDate" th:text="${insertDate}"></p>
+        <p id="insertDate" th:text="*{insertDate}"></p>
+        <input type="hidden" name="insertDate" th:value="*{insertDate}">
       </div>
 
       <div th:classappend="${#fields.hasErrors('goodPoint')}?'has-error'" class="form-group">
