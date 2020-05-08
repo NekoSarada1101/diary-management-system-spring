@@ -28,4 +28,8 @@ public class DiaryService {
     public int updateDiary(Diary diary) {
         return diaryDao.updateDiary(diary);
     }
+
+    public int deleteDiary(Diary diary) {
+        return diaryDao.deleteDiary(diary);
+    }
 }

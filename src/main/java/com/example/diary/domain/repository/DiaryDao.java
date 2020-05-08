@@ -13,4 +13,6 @@ public interface DiaryDao {
     public int insertDiary(Diary diary) throws DataAccessException;
 
     public int updateDiary(Diary diary) throws DataAccessException;
+
+    public int deleteDiary(Diary diary) throws DataAccessException;
 }
