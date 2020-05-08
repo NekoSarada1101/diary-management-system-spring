@@ -116,4 +116,10 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
 
         return row;
     }
+
+    public int deleteDiary(Diary diary) throws DataAccessException {
+        int row = jdbcTemplate.update("DELETE FROM diary WHERE class_code = ? AND insert_date = ?", diary.getClassCode(), diary.getInsertDate());
+
+        return row;
+    }
 }
