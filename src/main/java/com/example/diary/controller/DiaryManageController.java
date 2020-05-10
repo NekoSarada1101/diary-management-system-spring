@@ -43,7 +43,7 @@ public class DiaryManageController {
         if (sortOptionOrder == null) sortOptionOrder = "desc";
 
         //ソートした日誌リスト取得
-        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder);
+        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "diaryManage");
         model.addAttribute("diaryList", diaryList);
 
         //今日の日付を取得
@@ -76,7 +76,7 @@ public class DiaryManageController {
 
         if (bindingResult.hasErrors()) {
             //ソートした日誌リスト取得
-            List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc");
+            List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc", "diaryManage");
             model.addAttribute("diaryList", diaryList);
 
             return "student/main";

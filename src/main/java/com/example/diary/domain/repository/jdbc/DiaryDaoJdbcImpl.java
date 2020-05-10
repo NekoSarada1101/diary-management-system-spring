@@ -19,13 +19,19 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     JdbcTemplate jdbcTemplate;
 
     //ソート
-    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException {
+    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder, String fromWhere) throws DataAccessException {
         //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
-        String[] allowedCol = {"insert_date", "good_point", "bad_point", "student_comment"};
         String[] allowedOrder = {"asc", "desc"};
-        if (!hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder)) {
-            return null;
+        boolean isAllow = false;
+        if (fromWhere.equals("diaryManage")) {
+            String[] allowedCol = {"insert_date", "good_point", "bad_point", "student_comment"};
+            isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
+        } else if (fromWhere.equals("diaryDisplay")) {
+            String[] allowedCol = {"insert_date", "student_id", "good_point", "bad_point", "student_comment", "teacher_comment"};
+            isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
         }
+
+        if (!isAllow) return null;
 
         List<Map<String, Object>> fetchDiaryList = jdbcTemplate.queryForList("SELECT * FROM diary ORDER BY " + sortOptionCol + " " + sortOptionOrder);
 
@@ -48,6 +54,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return diaryList;
     }
 
+    //ソート対象のカラムの正当性チェック
     public boolean hasAllowedValue(String sortOptionCol, String[] allowedCol, String sortOptionOrder, String[] allowedOrder) {
         for (int i = 0; i < allowedCol.length; i++) {
             if (sortOptionCol.equals(allowedCol[i])) break;
@@ -70,6 +77,9 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         if (fromWhere.equals("diaryManage")) {
             sql = "SELECT * FROM diary WHERE insert_date LIKE ? OR good_point LIKE ? OR bad_point LIKE ? OR student_comment LIKE ?";
             fetchDiaryList = jdbcTemplate.queryForList(sql, searchWord, searchWord, searchWord, searchWord);
+        } else if (fromWhere.equals("diaryDisplay")) {
+            sql = "SELECT * FROM diary WHERE insert_date LIKE ? OR student_id LIKE ? OR good_point LIKE ? OR bad_point LIKE ? OR student_comment LIKE ? OR teacher_comment LIKE ?";
+            fetchDiaryList = jdbcTemplate.queryForList(sql, searchWord, searchWord, searchWord, searchWord, searchWord, searchWord);
         }
 
         List<Diary> diaryList = new ArrayList<>();
@@ -117,6 +127,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         return row;
     }
 
+    //削除
     public int deleteDiary(Diary diary) throws DataAccessException {
         int row = jdbcTemplate.update("DELETE FROM diary WHERE class_code = ? AND insert_date = ?", diary.getClassCode(), diary.getInsertDate());
 
