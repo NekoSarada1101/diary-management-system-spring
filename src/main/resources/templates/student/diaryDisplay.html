@@ -10,6 +10,18 @@
   <div class="col-12 col-lg-8 mx-auto">
     <h3 class="text-center mb-5">日誌閲覧画面</h3>
 
+    <div class="row">
+      <!--メニュー画面に戻る-->
+      <form action="/studentMenu" method="get" class="col-6 text-left mb-3">
+        <button type="submit" class="btn btn-outline-dark btn-lg btn-block">戻る</button>
+      </form>
+
+      <!--日誌管理-->
+      <form action="/diaryManage" method="post" class="col-6 text-right mb-3">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">日誌管理画面へ</button>
+      </form>
+    </div>
+
     <!--ソート-->
     <form action="/diaryDisplay" method="post" th:object="${diarySortForm}" class="row mb-3">
       <select th:field="*{sortOptionCol}" class="col-5 custom-select m-0">
