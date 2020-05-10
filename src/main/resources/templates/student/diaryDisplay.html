@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>日誌閲覧</title>
+</head>
+
+<body>
+<div th:fragment="diaryDisplay_contents">
+  <div class="col-12 col-lg-8 mx-auto">
+    <h3 class="text-center mb-5">日誌閲覧画面</h3>
+
+    <!--ソート-->
+    <form action="/diaryDisplay" method="post" th:object="${diarySortForm}" class="row mb-3">
+      <select th:field="*{sortOptionCol}" class="col-5 custom-select m-0">
+        <option th:each="items:${sortOptionCol}" th:value="${items.key}" th:text="${items.value}"></option>
+      </select>
+
+      <select th:field="*{sortOptionOrder}" class="col-5 custom-select m-0">
+        <option th:each="items:${sortOptionOrder}" th:value="${items.key}" th:text="${items.value}"></option>
+      </select>
+
+      <button type="submit" class="col-2 btn btn-primary m-0">ソート</button>
+    </form>
+
+    <!--検索-->
+    <form action="/diaryDisplaySearch" method="post" th:object="${diarySearchForm}" class="row form-group mb-3">
+      <input type="text" th:field="*{searchWord}" placeholder="検索したいワードを入力してください" class="col-10 form-control m-0" required>
+      <button type="submit" class="col-2 btn btn-primary m-0">検索</button>
+      <span th:if="${#fields.hasErrors('searchWord')}" th:errors="*{searchWord}" class="text-danger"></span>
+    </form>
+
+    <!--日誌リスト-->
+    <table th:each="diary:${diaryList}" class="table table-hover table-bordered shadow-sm mb-5">
+      <tr class="row">
+        <th class="col-4">登録日</th>
+        <td class="col-8" th:text="${diary.insertDate}"></td>
+      </tr>
+
+      <tr class="row">
+        <th class="col-4">学籍番号</th>
+        <td class="col-8" th:text="${diary.studentId}"></td>
+      </tr>
+
+      <tr class="row">
+        <th class="col-4">良い点</th>
+        <td class="col-8" th:text="${diary.goodPoint}"></td>
+      </tr>
+
+      <tr class="row">
+        <th class="col-4">悪い点</th>
+        <td class="col-8" th:text="${diary.badPoint}"></td>
+      </tr>
+
+      <tr class="row">
+        <th class="col-4">学生コメント</th>
+        <td class="col-8" th:text="${diary.studentComment}"></td>
+      </tr>
+
+      <tr class="row">
+        <th class="col-4">教員コメント</th>
+        <td class="col-8" th:text="${diary.teacherComment}"></td>
+      </tr>
+
+    </table>
+  </div>
+</div>
+</body>
+</html>

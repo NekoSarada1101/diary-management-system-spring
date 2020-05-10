@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 public interface DiaryDao {
-    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder) throws DataAccessException;
+    public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder, String fromWhere) throws DataAccessException;
 
     public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) throws DataAccessException;
 

@@ -13,26 +13,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-public class DiaryManageController {
+public class DiaryDisplayController {
 
     @Autowired
     DiaryService diaryService;
 
-    //日誌管理画面/ソート
-    @PostMapping("/diaryManage")
-    public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
+    String[] key = {"insert_date", "student_id", "good_point", "bad_point", "student_comment", "teacher_comment"};
+    String[] value = {"登録日", "学籍番号", "良い点", "悪い点", "学生コメント", "教員コメント"};
 
-        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
-        model.addAttribute("title", "日誌管理");
-
-        session.removeAttribute("diary");
+    @PostMapping("/diaryDisplay")
+    public String postDiaryDisplay(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model) {
+        model.addAttribute("contents", "student/diaryDisplay :: diaryDisplay_contents");
+        model.addAttribute("title", "日誌閲覧");
 
         //選択されたselectBoxのoptionの値を取得
         String sortOptionCol = diarySortForm.getSortOptionCol();
@@ -43,18 +39,13 @@ public class DiaryManageController {
         if (sortOptionOrder == null) sortOptionOrder = "desc";
 
         //ソートした日誌リスト取得
-        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "diaryManage");
+        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "diaryDisplay");
         model.addAttribute("diaryList", diaryList);
 
-        //今日の日付を取得
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String today = sdf.format(cal.getTime());
-        session.setAttribute("today", today);
-
         //selectBoxのoptionの値を設定
-        Map<String, String> selectColMap = createSelectBoxOptionCol();
-        Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
+
+        Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
+        Map<String, String> selectOrderMap = diaryService.createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
 
@@ -62,21 +53,21 @@ public class DiaryManageController {
     }
 
     //検索
-    @PostMapping("/diaryManageSearch")
+    @PostMapping("/diaryDisplaySearch")
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
 
-        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
+        model.addAttribute("contents", "student/diaryDisplay :: diaryDisplay_contents");
         model.addAttribute("title", "日誌管理");
 
         //selectBoxのoptionの値を設定
-        Map<String, String> selectColMap = createSelectBoxOptionCol();
-        Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
+        Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
+        Map<String, String> selectOrderMap = diaryService.createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
 
         if (bindingResult.hasErrors()) {
             //ソートした日誌リスト取得
-            List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc", "diaryManage");
+            List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc", "diaryDisplay");
             model.addAttribute("diaryList", diaryList);
 
             return "student/main";
@@ -85,27 +76,9 @@ public class DiaryManageController {
         String searchWord = diarySearchForm.getSearchWord();
 
         //検索した日誌リスト取得
-        List<Diary> diaryList = diaryService.fetchSearchDiaryList(searchWord, "diaryManage");
+        List<Diary> diaryList = diaryService.fetchSearchDiaryList(searchWord, "diaryDisplay");
         model.addAttribute("diaryList", diaryList);
 
         return "student/main";
-    }
-
-    public Map<String, String> createSelectBoxOptionCol() {
-        Map<String, String> selectColMap = new LinkedHashMap<>();
-        selectColMap.put("insert_date", "登録日");
-        selectColMap.put("good_point", "良い点");
-        selectColMap.put("bad_point", "悪い点");
-        selectColMap.put("student_comment", "学生コメント");
-
-        return selectColMap;
-    }
-
-    public Map<String, String> createSelectBoxOptionOrder() {
-        Map<String, String> selectOrderMap = new LinkedHashMap<>();
-        selectOrderMap.put("asc", "昇順");
-        selectOrderMap.put("desc", "降順");
-
-        return selectOrderMap;
     }
 }
