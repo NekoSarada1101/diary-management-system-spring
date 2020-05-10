@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,8 +21,8 @@ public class DiaryUpdateController {
     @Autowired
     DiaryService diaryService;
 
-    @GetMapping("/diaryUpdateInput")
-    public String getDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
+    @PostMapping("/diaryUpdateInput")
+    public String postDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
 
         model.addAttribute("contents", "student/diaryUpdateInput :: diaryUpdateInput_contents");
         model.addAttribute("title", "日誌修正入力");
@@ -43,7 +42,7 @@ public class DiaryUpdateController {
     @PostMapping("diaryUpdateCheck")
     public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return getDiaryUpdateInput(studentDiaryForm, model, session);
+            return postDiaryUpdateInput(studentDiaryForm, model, session);
         }
 
         model.addAttribute("contents", "student/diaryUpdateCheck :: diaryUpdateCheck_contents");

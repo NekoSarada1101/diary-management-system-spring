@@ -61,7 +61,7 @@ public class DiaryInsertController {
     }
 
     @PostMapping("/diaryInsertComplete")
-    public String getDiaryInsertComplete(HttpSession session, Model model) {
+    public String postDiaryInsertComplete(HttpSession session, Model model) {
         model.addAttribute("contents", "student/diaryInsertComplete :: diaryInsertComplete_contents");
         model.addAttribute("title", "日誌登録完了");
 

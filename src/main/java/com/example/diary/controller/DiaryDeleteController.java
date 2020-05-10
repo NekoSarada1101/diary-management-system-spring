@@ -7,7 +7,6 @@ import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,7 +18,7 @@ public class DiaryDeleteController {
     @Autowired
     DiaryService diaryService;
 
-    @GetMapping("/diaryDeleteCheck")
+    @PostMapping("/diaryDeleteCheck")
     public String postDiaryDeleteCheck(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
         model.addAttribute("contents", "student/diaryDeleteCheck :: diaryDeleteCheck_contents");
         model.addAttribute("title", "日誌削除確認");
@@ -28,7 +27,7 @@ public class DiaryDeleteController {
     }
 
     @PostMapping("/diaryDeleteComplete")
-    public String getDiaryDeleteComplete(@ModelAttribute StudentDiaryForm studentDiaryForm, HttpSession session, Model model) {
+    public String postDiaryDeleteComplete(@ModelAttribute StudentDiaryForm studentDiaryForm, HttpSession session, Model model) {
         model.addAttribute("contents", "student/diaryDeleteComplete :: diaryDeleteComplete_contents");
         model.addAttribute("title", "日誌削除完了");
 
