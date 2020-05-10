@@ -34,4 +34,22 @@ public class DiaryService {
     public int deleteDiary(Diary diary) {
         return diaryDao.deleteDiary(diary);
     }
+
+    public Map<String, String> createSelectBoxOptionCol(String[] key, String[] value) {
+        Map<String, String> selectColMap = new LinkedHashMap<>();
+
+        for (int i = 0; i < key.length; i++) {
+            selectColMap.put(key[i], value[i]);
+        }
+
+        return selectColMap;
+    }
+
+    public Map<String, String> createSelectBoxOptionOrder() {
+        Map<String, String> selectOrderMap = new LinkedHashMap<>();
+        selectOrderMap.put("asc", "昇順");
+        selectOrderMap.put("desc", "降順");
+
+        return selectOrderMap;
+    }
 }

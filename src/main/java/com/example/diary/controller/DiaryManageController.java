@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +23,9 @@ public class DiaryManageController {
 
     @Autowired
     DiaryService diaryService;
+
+    String[] key = {"insert_date", "student_id", "good_point", "bad_point", "student_comment"};
+    String[] value = {"登録日", "学籍番号", "良い点", "悪い点", "学生コメント"};
 
     //日誌管理画面/ソート
     @PostMapping("/diaryManage")
@@ -53,8 +55,8 @@ public class DiaryManageController {
         session.setAttribute("today", today);
 
         //selectBoxのoptionの値を設定
-        Map<String, String> selectColMap = createSelectBoxOptionCol();
-        Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
+        Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
+        Map<String, String> selectOrderMap = diaryService.createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
 
@@ -69,8 +71,8 @@ public class DiaryManageController {
         model.addAttribute("title", "日誌管理");
 
         //selectBoxのoptionの値を設定
-        Map<String, String> selectColMap = createSelectBoxOptionCol();
-        Map<String, String> selectOrderMap = createSelectBoxOptionOrder();
+        Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
+        Map<String, String> selectOrderMap = diaryService.createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
 
@@ -89,23 +91,5 @@ public class DiaryManageController {
         model.addAttribute("diaryList", diaryList);
 
         return "student/main";
-    }
-
-    public Map<String, String> createSelectBoxOptionCol() {
-        Map<String, String> selectColMap = new LinkedHashMap<>();
-        selectColMap.put("insert_date", "登録日");
-        selectColMap.put("good_point", "良い点");
-        selectColMap.put("bad_point", "悪い点");
-        selectColMap.put("student_comment", "学生コメント");
-
-        return selectColMap;
-    }
-
-    public Map<String, String> createSelectBoxOptionOrder() {
-        Map<String, String> selectOrderMap = new LinkedHashMap<>();
-        selectOrderMap.put("asc", "昇順");
-        selectOrderMap.put("desc", "降順");
-
-        return selectOrderMap;
     }
 }
