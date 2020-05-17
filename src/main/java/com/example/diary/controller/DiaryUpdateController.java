@@ -48,15 +48,7 @@ public class DiaryUpdateController {
         model.addAttribute("contents", "student/diaryUpdateCheck :: diaryUpdateCheck_contents");
         model.addAttribute("title", "日誌修正確認");
 
-        Diary diary = new Diary();
-        diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate(studentDiaryForm.getInsertDate());
-        diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
-        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
-        diary.setBadPoint(studentDiaryForm.getBadPoint());
-        diary.setStudentComment(studentDiaryForm.getStudentComment());
-
-        session.setAttribute("diary", diary);
+        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
 
         return "student/main";
     }

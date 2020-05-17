@@ -2,7 +2,6 @@ package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.GroupOrder;
-import com.example.diary.domain.model.Student;
 import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,15 +46,7 @@ public class DiaryInsertController {
         model.addAttribute("contents", "student/diaryInsertCheck :: diaryInsertCheck_contents");
         model.addAttribute("title", "日誌登録確認");
 
-        Diary diary = new Diary();
-        diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate(studentDiaryForm.getInsertDate());
-        diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
-        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
-        diary.setBadPoint(studentDiaryForm.getBadPoint());
-        diary.setStudentComment(studentDiaryForm.getStudentComment());
-
-        session.setAttribute("diary", diary);
+        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm,session));
 
         return "student/main";
     }
