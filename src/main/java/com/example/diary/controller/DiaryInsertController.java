@@ -23,8 +23,7 @@ public class DiaryInsertController {
 
     @GetMapping("/diaryInsertInput")
     public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
-        model.addAttribute("contents", "student/diaryInsertInput :: diaryInsertInput_contents");
-        model.addAttribute("title", "日誌登録");
+        diaryService.addContentsAndTitle(model, "diaryInsertInput", "日誌登録入力");
 
         try {
             studentDiaryForm.setInsertDate((String) session.getAttribute("today"));
@@ -42,19 +41,16 @@ public class DiaryInsertController {
         if (bindingResult.hasErrors()) {
             return getDiaryInsertInput(studentDiaryForm, model, session);
         }
+        diaryService.addContentsAndTitle(model, "diaryInsertCheck", "日誌登録確認");
 
-        model.addAttribute("contents", "student/diaryInsertCheck :: diaryInsertCheck_contents");
-        model.addAttribute("title", "日誌登録確認");
-
-        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm,session));
+        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
 
         return "student/main";
     }
 
     @PostMapping("/diaryInsertComplete")
     public String postDiaryInsertComplete(HttpSession session, Model model) {
-        model.addAttribute("contents", "student/diaryInsertComplete :: diaryInsertComplete_contents");
-        model.addAttribute("title", "日誌登録完了");
+        diaryService.addContentsAndTitle(model, "diaryInsertComplete", "日誌登録完了");
 
         int row = diaryService.insertDiary((Diary) session.getAttribute("diary"));
         System.out.println(row);

@@ -30,9 +30,7 @@ public class DiaryManageController {
     //日誌管理画面/ソート
     @PostMapping("/diaryManage")
     public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
-
-        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
-        model.addAttribute("title", "日誌管理");
+        diaryService.addContentsAndTitle(model,"diaryManage","日誌管理");
 
         session.removeAttribute("diary");
 
@@ -66,9 +64,7 @@ public class DiaryManageController {
     //検索
     @PostMapping("/diaryManageSearch")
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
-
-        model.addAttribute("contents", "student/diaryManage :: diaryManage_contents");
-        model.addAttribute("title", "日誌管理");
+        diaryService.addContentsAndTitle(model,"diaryManage","日誌管理");
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
