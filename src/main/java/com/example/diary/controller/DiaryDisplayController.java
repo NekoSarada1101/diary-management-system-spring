@@ -42,7 +42,6 @@ public class DiaryDisplayController {
         model.addAttribute("diaryList", diaryList);
 
         //selectBoxのoptionの値を設定
-
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
         Map<String, String> selectOrderMap = diaryService.createSelectBoxOptionOrder();
         model.addAttribute("sortOptionCol", selectColMap);

@@ -36,7 +36,7 @@ public class DiaryUpdateController {
         return "student/main";
     }
 
-    @PostMapping("diaryUpdateCheck")
+    @PostMapping("/diaryUpdateCheck")
     public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return postDiaryUpdateInput(studentDiaryForm, model, session);

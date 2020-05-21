@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping("/auth")
     public String postLogin(@ModelAttribute @Validated(GroupOrder.class) LoginForm loginForm, BindingResult bindingResult, Model model, HttpSession session) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return getLogin(loginForm, model);
         }
 
@@ -38,4 +38,13 @@ public class LoginController {
 
         return "redirect:/studentMenu";
     }
+
+    @GetMapping("/studentMenu")
+    public String getStudentMenu(Model model, String content, String title) {
+        model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
+        model.addAttribute("title", "学生メニュー");
+
+        return "student/main";
+    }
 }
+

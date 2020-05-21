@@ -31,6 +31,7 @@ public class DiaryInsertController {
             studentDiaryForm.setBadPoint(((Diary) session.getAttribute("diary")).getBadPoint());
             studentDiaryForm.setStudentComment(((Diary) session.getAttribute("diary")).getStudentComment());
         } catch (NullPointerException e) {
+            System.out.println(e);
         }
 
         return "student/main";
