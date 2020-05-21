@@ -27,8 +27,7 @@ public class DiaryDisplayController {
 
     @PostMapping("/diaryDisplay")
     public String postDiaryDisplay(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model) {
-        model.addAttribute("contents", "student/diaryDisplay :: diaryDisplay_contents");
-        model.addAttribute("title", "日誌閲覧");
+        diaryService.addContentsAndTitle(model, "diaryDisplay", "日誌閲覧");
 
         //選択されたselectBoxのoptionの値を取得
         String sortOptionCol = diarySortForm.getSortOptionCol();
@@ -55,9 +54,7 @@ public class DiaryDisplayController {
     //検索
     @PostMapping("/diaryDisplaySearch")
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
-
-        model.addAttribute("contents", "student/diaryDisplay :: diaryDisplay_contents");
-        model.addAttribute("title", "日誌管理");
+        diaryService.addContentsAndTitle(model, "diaryDisplay", "日誌閲覧");
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);

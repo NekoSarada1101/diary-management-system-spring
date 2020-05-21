@@ -1,10 +1,14 @@
 package com.example.diary.domain.service;
 
 import com.example.diary.domain.model.Diary;
+import com.example.diary.domain.model.Student;
+import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.repository.DiaryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +55,22 @@ public class DiaryService {
         selectOrderMap.put("desc", "降順");
 
         return selectOrderMap;
+    }
+
+    public Diary setDiaryClass(StudentDiaryForm studentDiaryForm, HttpSession session){
+        Diary diary = new Diary();
+        diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
+        diary.setInsertDate(studentDiaryForm.getInsertDate());
+        diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
+        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
+        diary.setBadPoint(studentDiaryForm.getBadPoint());
+        diary.setStudentComment(studentDiaryForm.getStudentComment());
+
+        return diary;
+    }
+
+    public void addContentsAndTitle(Model model, String contents, String title){
+        model.addAttribute("contents", "student/" + contents + " :: " + contents + "_contents");
+        model.addAttribute("title", title);
     }
 }

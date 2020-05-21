@@ -2,7 +2,6 @@ package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.GroupOrder;
-import com.example.diary.domain.model.Student;
 import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,7 @@ public class DiaryUpdateController {
 
     @PostMapping("/diaryUpdateInput")
     public String postDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
-
-        model.addAttribute("contents", "student/diaryUpdateInput :: diaryUpdateInput_contents");
-        model.addAttribute("title", "日誌修正入力");
+        diaryService.addContentsAndTitle(model, "diaryUpdateInput", "日誌修正入力");
 
         try {
             studentDiaryForm.setInsertDate(((Diary) session.getAttribute("diary")).getInsertDate());
@@ -44,27 +41,16 @@ public class DiaryUpdateController {
         if (bindingResult.hasErrors()) {
             return postDiaryUpdateInput(studentDiaryForm, model, session);
         }
+        diaryService.addContentsAndTitle(model, "diaryUpdateCheck", "日誌修正確認");
 
-        model.addAttribute("contents", "student/diaryUpdateCheck :: diaryUpdateCheck_contents");
-        model.addAttribute("title", "日誌修正確認");
-
-        Diary diary = new Diary();
-        diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate(studentDiaryForm.getInsertDate());
-        diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
-        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
-        diary.setBadPoint(studentDiaryForm.getBadPoint());
-        diary.setStudentComment(studentDiaryForm.getStudentComment());
-
-        session.setAttribute("diary", diary);
+        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
 
         return "student/main";
     }
 
     @PostMapping("/diaryUpdateComplete")
     public String postDiaryUpdateComplete(HttpSession session, Model model) {
-        model.addAttribute("contents", "student/diaryUpdateComplete :: diaryUpdateComplete_contents");
-        model.addAttribute("title", "日誌修正完了");
+        diaryService.addContentsAndTitle(model, "diaryUpdateComplete", "日誌修正完了");
 
         int row = diaryService.updateDiary((Diary) session.getAttribute("diary"));
         System.out.println(row);
