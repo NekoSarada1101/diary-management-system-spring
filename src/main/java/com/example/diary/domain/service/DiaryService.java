@@ -20,7 +20,37 @@ public class DiaryService {
     DiaryDao diaryDao;
 
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder, String fromWhere) {
+        //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
+        String[] allowedOrder = {"asc", "desc"};
+        boolean isAllow = false;
+
+        if (fromWhere.equals("diaryManage")) {
+            String[] allowedCol = {"insert_date", "good_point", "bad_point", "student_comment"};
+            isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
+
+        } else if (fromWhere.equals("diaryDisplay")) {
+            String[] allowedCol = {"insert_date", "student_id", "good_point", "bad_point", "student_comment", "teacher_comment"};
+            isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
+        }
+
+        if (!isAllow) return null;
+
         return diaryDao.fetchSortDiaryList(sortOptionCol, sortOptionOrder, fromWhere);
+    }
+
+    //ソート対象のカラムの正当性チェック
+    public boolean hasAllowedValue(String sortOptionCol, String[] allowedCol, String sortOptionOrder, String[] allowedOrder) {
+        for (int i = 0; i < allowedCol.length; i++) {
+            if (sortOptionCol.equals(allowedCol[i])) break;
+            if (i == allowedCol.length - 1) return false;
+        }
+
+        for (int i = 0; i < allowedOrder.length; i++) {
+            if (sortOptionOrder.equals(allowedOrder[i])) break;
+            if (i == allowedOrder.length - 1) return false;
+        }
+
+        return true;
     }
 
     public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) {
@@ -57,7 +87,7 @@ public class DiaryService {
         return selectOrderMap;
     }
 
-    public Diary setDiaryClass(StudentDiaryForm studentDiaryForm, HttpSession session){
+    public Diary setDiaryClass(StudentDiaryForm studentDiaryForm, HttpSession session) {
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
         diary.setInsertDate(studentDiaryForm.getInsertDate());
@@ -69,7 +99,7 @@ public class DiaryService {
         return diary;
     }
 
-    public void addContentsAndTitle(Model model, String contents, String title){
+    public void addContentsAndTitle(Model model, String contents, String title) {
         model.addAttribute("contents", "student/" + contents + " :: " + contents + "_contents");
         model.addAttribute("title", title);
     }
