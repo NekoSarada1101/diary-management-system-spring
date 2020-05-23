@@ -24,8 +24,8 @@ public class DiaryManageController {
     @Autowired
     DiaryService diaryService;
 
-    String[] key = {"insert_date", "student_id", "good_point", "bad_point", "student_comment"};
-    String[] value = {"登録日", "学籍番号", "良い点", "悪い点", "学生コメント"};
+    String[] key = {"insert_date", "good_point", "bad_point", "student_comment"};
+    String[] value = {"登録日", "良い点", "悪い点", "学生コメント"};
 
     //日誌管理画面/ソート
     @PostMapping("/diaryManage")
