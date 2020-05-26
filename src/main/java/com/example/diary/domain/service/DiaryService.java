@@ -19,6 +19,17 @@ public class DiaryService {
     @Autowired
     DiaryDao diaryDao;
 
+    @Autowired
+    HttpSession session;
+
+    public boolean checkLogin() {
+        if (session.getAttribute("student") == null) {
+            System.out.println("ログインチェックエラー");
+            return false;
+        }
+        return true;
+    }
+
     public List<Diary> fetchSortDiaryList(String sortOptionCol, String sortOptionOrder, String fromWhere) {
         //sortOptionColとsortOptionOrderの値が許可されたものかチェックする
         String[] allowedOrder = {"asc", "desc"};

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Error</title>
+</head>
+<body>
+<p>
+  無操作時間が長すぎたり、ブラウザのページ遷移が正しくない場合にこのエラーが表示されます。
+  操作を続ける場合は、もう一度ログインしてください。
+</p>
+
+<form th:action="logout" method="post">
+  <button class="btn btn-link" type="submit">ログイン画面に戻る</button>
+</form>
+</body>
+</html>
