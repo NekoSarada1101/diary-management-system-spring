@@ -20,7 +20,7 @@
   <h1><a href="/studentMenu" class="text-white">クラス日誌管理システム</a></h1>
   <div class="row">
     <h5 th:text="${session.student.getStudentName()} + 'さん'" class="text-white text-left col-6 p-0"></h5>
-    <form action="" method="post" class="text-right col-6">
+    <form action="logout" method="post" class="text-right col-6">
       <button class="btn btn-secondary">ログアウト</button>
     </form>
   </div>

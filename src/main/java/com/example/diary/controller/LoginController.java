@@ -40,11 +40,18 @@ public class LoginController {
     }
 
     @GetMapping("/studentMenu")
-    public String getStudentMenu(Model model, String content, String title) {
+    public String getStudentMenu(Model model) {
+        if (!studentService.checkLogin()) return "sessionError";
         model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
         model.addAttribute("title", "学生メニュー");
 
         return "student/main";
+    }
+
+    @PostMapping("/logout")
+    public String postLogout(HttpSession session) {
+        session.invalidate();
+        return "login";
     }
 }
 

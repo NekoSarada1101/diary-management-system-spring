@@ -23,6 +23,7 @@ public class DiaryInsertController {
 
     @GetMapping("/diaryInsertInput")
     public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
+        if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryInsertInput", "日誌登録入力");
 
         try {
@@ -39,6 +40,7 @@ public class DiaryInsertController {
 
     @PostMapping("/diaryInsertCheck")
     public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
+        if (!diaryService.checkLogin()) return "sessionError";
         if (bindingResult.hasErrors()) {
             return getDiaryInsertInput(studentDiaryForm, model, session);
         }
@@ -51,6 +53,7 @@ public class DiaryInsertController {
 
     @PostMapping("/diaryInsertComplete")
     public String postDiaryInsertComplete(HttpSession session, Model model) {
+        if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryInsertComplete", "日誌登録完了");
 
         int row = diaryService.insertDiary((Diary) session.getAttribute("diary"));
