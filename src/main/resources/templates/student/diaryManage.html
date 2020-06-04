@@ -17,8 +17,11 @@
       </form>
 
       <!--日誌登録-->
-      <form action="/diaryInsertInput" method="get" class="col-6 text-right mb-3">
+      <form action="/diaryInsertInput" method="get" class="col-6 text-right mb-3" th:unless="${hasInserted}">
         <button type="submit" class="btn btn-primary btn-lg btn-block">日誌登録</button>
+      </form>
+      <form action="/diaryInsertInput" method="get" class="col-6 text-right mb-3" th:if="${hasInserted}">
+        <button type="submit" class="btn btn-primary btn-lg btn-block" disabled>日誌登録</button>
       </form>
     </div>
 
