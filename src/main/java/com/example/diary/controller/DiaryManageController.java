@@ -3,6 +3,7 @@ package com.example.diary.controller;
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.DiarySearchForm;
 import com.example.diary.domain.model.DiarySortForm;
+import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +32,10 @@ public class DiaryManageController {
         if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
 
+        //今日の日誌が登録済みか確認
+        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
+        model.addAttribute("hasInserted", hasInserted);
+
         session.removeAttribute("diary");
 
         //選択されたselectBoxのoptionの値を取得
@@ -46,12 +49,6 @@ public class DiaryManageController {
         //ソートした日誌リスト取得
         List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "diaryManage");
         model.addAttribute("diaryList", diaryList);
-
-        //今日の日付を取得
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String today = sdf.format(cal.getTime());
-        session.setAttribute("today", today);
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
@@ -67,6 +64,10 @@ public class DiaryManageController {
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
+
+        //今日の日誌が登録済みか確認
+        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
+        model.addAttribute("hasInserted", hasInserted);
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);

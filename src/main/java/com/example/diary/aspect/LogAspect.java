@@ -42,6 +42,7 @@ public class LogAspect {
         for (int i = 0; i < values.length; i++) {
             System.out.println(names[i] + " = " + values[i]);
         }
+
         System.out.println();
 
         try {

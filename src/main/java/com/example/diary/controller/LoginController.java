@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 public class LoginController {
@@ -40,10 +42,16 @@ public class LoginController {
     }
 
     @GetMapping("/studentMenu")
-    public String getStudentMenu(Model model) {
+    public String getStudentMenu(Model model, HttpSession session) {
         if (!studentService.checkLogin()) return "sessionError";
         model.addAttribute("contents", "student/studentMenu :: studentMenu_contents");
         model.addAttribute("title", "学生メニュー");
+
+        //今日の日付を取得
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(cal.getTime());
+        session.setAttribute("today", today);
 
         return "student/main";
     }

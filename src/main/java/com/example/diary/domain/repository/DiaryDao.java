@@ -10,6 +10,8 @@ public interface DiaryDao {
 
     public List<Diary> fetchSearchDiaryList(String searchWord, String fromWhere) throws DataAccessException;
 
+    public boolean hasDiaryInsertedToday(String classCode, String today)throws DataAccessException;
+
     public int insertDiary(Diary diary) throws DataAccessException;
 
     public int updateDiary(Diary diary) throws DataAccessException;

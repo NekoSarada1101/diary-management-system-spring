@@ -56,8 +56,7 @@ public class DiaryInsertController {
         if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryInsertComplete", "日誌登録完了");
 
-        int row = diaryService.insertDiary((Diary) session.getAttribute("diary"));
-        System.out.println(row);
+        diaryService.insertDiary((Diary) session.getAttribute("diary"));
 
         return "student/main";
     }
