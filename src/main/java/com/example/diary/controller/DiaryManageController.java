@@ -3,6 +3,7 @@ package com.example.diary.controller;
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.DiarySearchForm;
 import com.example.diary.domain.model.DiarySortForm;
+import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,10 @@ public class DiaryManageController {
     public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
         if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
+
+        //今日の日誌が登録済みか確認
+        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
+        model.addAttribute("hasInserted", hasInserted);
 
         session.removeAttribute("diary");
 
@@ -67,6 +72,10 @@ public class DiaryManageController {
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (!diaryService.checkLogin()) return "sessionError";
         diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
+
+        //今日の日誌が登録済みか確認
+        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
+        model.addAttribute("hasInserted", hasInserted);
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);

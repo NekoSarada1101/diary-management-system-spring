@@ -68,6 +68,10 @@ public class DiaryService {
         return diaryDao.fetchSearchDiaryList(searchWord, fromWhere);
     }
 
+    public boolean hasDiaryInsertedToday(String classCode, String today) {
+        return diaryDao.hasDiaryInsertedToday(classCode, today);
+    }
+
     public int insertDiary(Diary diary) {
         return diaryDao.insertDiary(diary);
     }
