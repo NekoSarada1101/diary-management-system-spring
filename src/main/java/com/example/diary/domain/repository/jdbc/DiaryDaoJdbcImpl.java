@@ -7,7 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
             Diary diary = new Diary();
 
             diary.setClassCode((String) map.get("class_code"));
-            diary.setInsertDate(((Date) map.get("insert_date")).toString());
+            diary.setInsertDate((map.get("insert_date")).toString());
             diary.setStudentId((String) map.get("student_id"));
             diary.setGoodPoint((String) map.get("good_point"));
             diary.setBadPoint((String) map.get("bad_point"));
@@ -71,7 +70,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
             Diary diary = new Diary();
 
             diary.setClassCode((String) map.get("class_code"));
-            diary.setInsertDate(((Date) map.get("insert_date")).toString());
+            diary.setInsertDate((map.get("insert_date")).toString());
             diary.setStudentId((String) map.get("student_id"));
             diary.setGoodPoint((String) map.get("good_point"));
             diary.setBadPoint((String) map.get("bad_point"));
@@ -83,6 +82,12 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
         }
 
         return diaryList;
+    }
+
+    public boolean hasDiaryInsertedToday(String classCode, String today) {
+        int count = jdbcTemplate.queryForObject("SELECT count(*) FROM diary WHERE class_code = ? AND insert_date = ?", Integer.class, classCode, today);
+        if (count == 0) return false;
+        return true;
     }
 
     //登録
