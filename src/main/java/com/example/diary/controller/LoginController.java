@@ -3,7 +3,9 @@ package com.example.diary.controller;
 import com.example.diary.domain.model.GroupOrder;
 import com.example.diary.domain.model.LoginForm;
 import com.example.diary.domain.model.Student;
+import com.example.diary.domain.model.Teacher;
 import com.example.diary.domain.service.StudentService;
+import com.example.diary.domain.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +63,21 @@ public class LoginController {
         session.setAttribute("today", today);
 
         return "student/main";
+    }
+
+    @GetMapping("/teacherMenu")
+    public String getTeacherMenu(Model model, HttpSession session) {
+        if (!teacherService.checkLogin()) return "sessionError";
+        model.addAttribute("contents", "teacher/teacherMenu :: teacherMenu_contents");
+        model.addAttribute("title", "教員メニュー");
+
+        //今日の日付を取得
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(cal.getTime());
+        session.setAttribute("today", today);
+
+        return "teacher/main";
     }
 
     @PostMapping("/logout")
