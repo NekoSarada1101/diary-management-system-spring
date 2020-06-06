@@ -10,11 +10,11 @@ import javax.validation.constraints.Pattern;
 public class LoginForm {
 
     @NotBlank(groups = ValidGroup1.class)
-    @Length(max = 7, min = 7, groups = ValidGroup2.class)
+    @Length(max = 7, min = 3, groups = ValidGroup2.class)
     @Pattern(regexp = "[0-9]+$", groups = ValidGroup2.class)
-    private String studentId;
+    private String id;
 
     @NotBlank(groups = ValidGroup1.class)
     @Length(max = 128, groups = ValidGroup2.class)
-    private String studentPassword;
+    private String password;
 }

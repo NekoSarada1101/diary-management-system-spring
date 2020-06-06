@@ -22,17 +22,17 @@
   <h1 class="text-center mb-5">ログイン</h1>
 
   <form action="/auth" method="post" th:object="${loginForm}">
-    <div th:classappend="${#fields.hasErrors('studentId')}?'has-error'" class="form-group mb-3">
+    <div th:classappend="${#fields.hasErrors('id')}?'has-error'" class="form-group mb-3">
       <label for="id">ユーザーID</label>
-      <input id="id" type="text" name="studentId" th:field="*{studentId}" class="form-control" maxlength="7" required>
-      <span th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}" class="text-danger"></span>
+      <input id="id" type="text" name="id" th:field="*{id}" class="form-control" maxlength="7" required>
+      <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="text-danger"></span>
     </div>
 
-    <div th:classappend="${#fields.hasErrors('studentPassword')}?'has-error'" class="form-group mb-5">
+    <div th:classappend="${#fields.hasErrors('password')}?'has-error'" class="form-group mb-5">
       <label for="password">パスワード</label>
-      <input id="password" type="password" name="studentPassword" th:field="*{studentPassword}" maxlength="128"
+      <input id="password" type="password" name="password" th:field="*{password}" maxlength="128"
              class="form-control" required>
-      <span th:if="${#fields.hasErrors('studentPassword')}" th:errors="*{studentPassword}" class="text-danger"></span>
+      <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
     </div>
 
     <div class="text-center">
