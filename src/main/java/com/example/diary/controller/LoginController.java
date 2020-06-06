@@ -23,6 +23,9 @@ public class LoginController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    TeacherService teacherService;
+
     @GetMapping("/login")
     public String getLogin(@ModelAttribute LoginForm loginForm, Model model) {
         return "login";
@@ -34,11 +37,15 @@ public class LoginController {
             return getLogin(loginForm, model);
         }
 
-        Student student = studentService.login(loginForm.getStudentId(), loginForm.getStudentPassword());
-
-        session.setAttribute("student", student);
-
-        return "redirect:/studentMenu";
+        if (loginForm.getId().length() == 7) {
+            Student student = studentService.login(loginForm.getId(), loginForm.getPassword());
+            session.setAttribute("student", student);
+            return "redirect:/studentMenu";
+        } else {
+            Teacher teacher = teacherService.login(loginForm.getId(), loginForm.getPassword());
+            session.setAttribute("teacher", teacher);
+            return "redirect:/teacherMenu";
+        }
     }
 
     @GetMapping("/studentMenu")
