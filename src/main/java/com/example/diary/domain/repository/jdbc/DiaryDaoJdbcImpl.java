@@ -91,6 +91,7 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
     }
 
     //登録
+    //TODO INSERT文が2回実行されている 原因不明
     public int insertDiary(Diary diary) throws DataAccessException {
         int row = jdbcTemplate.update("INSERT INTO diary(class_code, insert_date,student_id,good_point,bad_point,student_comment) VALUES (?,?,?,?,?,?)",
                 diary.getClassCode(),
