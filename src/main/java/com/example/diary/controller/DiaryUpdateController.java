@@ -22,8 +22,8 @@ public class DiaryUpdateController {
 
     @PostMapping("/diaryUpdateInput")
     public String postDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryUpdateInput", "日誌修正入力");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryUpdateInput", "日誌修正入力");
 
         try {
             studentDiaryForm.setInsertDate(((Diary) session.getAttribute("diary")).getInsertDate());
@@ -39,11 +39,11 @@ public class DiaryUpdateController {
 
     @PostMapping("/diaryUpdateCheck")
     public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
+        if (!diaryService.checkLogin("student")) return "sessionError";
         if (bindingResult.hasErrors()) {
             return postDiaryUpdateInput(studentDiaryForm, model, session);
         }
-        diaryService.addContentsAndTitle(model, "diaryUpdateCheck", "日誌修正確認");
+        diaryService.addContentsAndTitle(model, "student", "diaryUpdateCheck", "日誌修正確認");
 
         session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
 
@@ -52,8 +52,8 @@ public class DiaryUpdateController {
 
     @PostMapping("/diaryUpdateComplete")
     public String postDiaryUpdateComplete(HttpSession session, Model model) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryUpdateComplete", "日誌修正完了");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryUpdateComplete", "日誌修正完了");
 
         int row = diaryService.updateDiary((Diary) session.getAttribute("diary"));
         System.out.println(row);

@@ -29,8 +29,8 @@ public class DiaryManageController {
     //日誌管理画面/ソート
     @PostMapping("/diaryManage")
     public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryManage", "日誌管理");
 
         //今日の日誌が登録済みか確認
         boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
@@ -62,8 +62,8 @@ public class DiaryManageController {
     //検索
     @PostMapping("/diaryManageSearch")
     public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryManage", "日誌管理");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryManage", "日誌管理");
 
         //今日の日誌が登録済みか確認
         boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
