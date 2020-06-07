@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>日誌一覧</title>
+</head>
+
+<body>
+<div th:fragment="commentManage_contents">
+  <div class="col-12 col-lg-8 mx-auto">
+    <h3 class="text-center mb-5">コメント管理画面</h3>
+
+    <div class="row">
+      <!--メニュー画面に戻る-->
+      <form action="/teacherMenu" method="get" class="col-6 text-left mb-3">
+        <button type="submit" class="btn btn-outline-dark btn-lg btn-block">戻る</button>
+      </form>
+
+      <!--ソート-->
+      <form action="/commentManage" method="post" th:object="${diarySortForm}" class="row mb-3">
+        <select th:field="*{sortOptionCol}" class="col-5 custom-select m-0">
+          <option th:each="items:${sortOptionCol}" th:value="${items.key}" th:text="${items.value}"></option>
+        </select>
+
+        <select th:field="*{sortOptionOrder}" class="col-5 custom-select m-0">
+          <option th:each="items:${sortOptionOrder}" th:value="${items.key}" th:text="${items.value}"></option>
+        </select>
+
+        <button type="submit" class="col-2 btn btn-primary m-0">ソート</button>
+      </form>
+
+      <!--検索-->
+      <form action="/commentManageSearch" method="post" th:object="${diarySearchForm}" class="row form-group mb-3">
+        <input type="text" th:field="*{searchWord}" placeholder="検索したいワードを入力してください" class="col-10 form-control m-0" required>
+        <button type="submit" class="col-2 btn btn-primary m-0">検索</button>
+        <span th:if="${#fields.hasErrors('searchWord')}" th:errors="*{searchWord}" class="text-danger"></span>
+      </form>
+
+      <!--日誌リスト-->
+      <table th:each="diary:${diaryList}" class="table table-hover table-bordered shadow-sm mb-5">
+        <tr class="row">
+          <th class="col-4">登録日</th>
+          <td class="col-8" th:text="${diary.insertDate}"></td>
+        </tr>
+
+        <tr class="row">
+          <th class="col-4">良い点</th>
+          <td class="col-8" th:text="${diary.goodPoint}"></td>
+        </tr>
+
+        <tr class="row">
+          <th class="col-4">悪い点</th>
+          <td class="col-8" th:text="${diary.badPoint}"></td>
+        </tr>
+
+        <tr class="row">
+          <th class="col-4">学生コメント</th>
+          <td class="col-8" th:text="${diary.studentComment}"></td>
+        </tr>
+
+        <tr class="row">
+          <th class="col-4">教員コメント</th>
+          <td class="col-8" th:text="${diary.teacherComment}"></td>
+        </tr>
+
+        <tr>
+          <td class="col-12 text-center" colspan="2" th:object="${teacherCommentForm}">
+            <form action="/diaryUpdateInput" method="post">
+              <input type="hidden" name="teacherComment" th:value="${diary.teacherComment}">
+              <button type="submit" class="col-4 btn btn-warning text-dark">更新</button>
+            </form>
+            <form action="/diaryDeleteCheck" method="post">
+              <input type="hidden" name="teacherComment" th:value="${diary.teacherComment}">
+              <button type="submit" class="col-4 btn btn-danger">削除</button>
+            </form>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
