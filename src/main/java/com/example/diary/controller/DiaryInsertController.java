@@ -23,8 +23,8 @@ public class DiaryInsertController {
 
     @GetMapping("/diaryInsertInput")
     public String getDiaryInsertInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryInsertInput", "日誌登録入力");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryInsertInput", "日誌登録入力");
 
         try {
             studentDiaryForm.setInsertDate((String) session.getAttribute("today"));
@@ -40,11 +40,11 @@ public class DiaryInsertController {
 
     @PostMapping("/diaryInsertCheck")
     public String postDiaryInsertCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
-        if (!diaryService.checkLogin()) return "sessionError";
+        if (!diaryService.checkLogin("student")) return "sessionError";
         if (bindingResult.hasErrors()) {
             return getDiaryInsertInput(studentDiaryForm, model, session);
         }
-        diaryService.addContentsAndTitle(model, "diaryInsertCheck", "日誌登録確認");
+        diaryService.addContentsAndTitle(model, "student", "diaryInsertCheck", "日誌登録確認");
 
         session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
 
@@ -53,8 +53,8 @@ public class DiaryInsertController {
 
     @PostMapping("/diaryInsertComplete")
     public String postDiaryInsertComplete(HttpSession session, Model model) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryInsertComplete", "日誌登録完了");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryInsertComplete", "日誌登録完了");
 
         diaryService.insertDiary((Diary) session.getAttribute("diary"));
 

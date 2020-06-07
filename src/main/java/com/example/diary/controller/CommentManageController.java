@@ -3,7 +3,6 @@ package com.example.diary.controller;
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.DiarySearchForm;
 import com.example.diary.domain.model.DiarySortForm;
-import com.example.diary.domain.model.Student;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,23 +17,19 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class DiaryManageController {
+public class CommentManageController {
 
     @Autowired
     DiaryService diaryService;
 
-    String[] key = {"insert_date", "good_point", "bad_point", "student_comment"};
-    String[] value = {"登録日", "良い点", "悪い点", "学生コメント"};
+    String[] key = {"insert_date", "good_point", "bad_point", "student_comment", "teacher_comment"};
+    String[] value = {"登録日", "良い点", "悪い点", "学生コメント", "教員コメント"};
 
-    //日誌管理画面/ソート
-    @PostMapping("/diaryManage")
-    public String postDiaryManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
-        if (!diaryService.checkLogin("student")) return "sessionError";
-        diaryService.addContentsAndTitle(model, "student", "diaryManage", "日誌管理");
-
-        //今日の日誌が登録済みか確認
-        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
-        model.addAttribute("hasInserted", hasInserted);
+    //コメント管理画面/ソート
+    @PostMapping("/commentManage")
+    public String postCommentManage(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute DiarySearchForm diarySearchForm, Model model, HttpSession session) {
+        if (!diaryService.checkLogin("teacher")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "teacher", "commentManage", "コメント管理");
 
         session.removeAttribute("diary");
 
@@ -47,7 +42,7 @@ public class DiaryManageController {
         if (sortOptionOrder == null) sortOptionOrder = "desc";
 
         //ソートした日誌リスト取得
-        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "diaryManage");
+        List<Diary> diaryList = diaryService.fetchSortDiaryList(sortOptionCol, sortOptionOrder, "commentManage");
         model.addAttribute("diaryList", diaryList);
 
         //selectBoxのoptionの値を設定
@@ -56,18 +51,14 @@ public class DiaryManageController {
         model.addAttribute("sortOptionCol", selectColMap);
         model.addAttribute("sortOptionOrder", selectOrderMap);
 
-        return "student/main";
+        return "teacher/main";
     }
 
     //検索
-    @PostMapping("/diaryManageSearch")
-    public String postDiaryManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
-        if (!diaryService.checkLogin("student")) return "sessionError";
-        diaryService.addContentsAndTitle(model, "student", "diaryManage", "日誌管理");
-
-        //今日の日誌が登録済みか確認
-        boolean hasInserted = diaryService.hasDiaryInsertedToday(((Student) session.getAttribute("student")).getClassCode(), (String) session.getAttribute("today"));
-        model.addAttribute("hasInserted", hasInserted);
+    @PostMapping("/commentManageSearch")
+    public String postCommentManageSearch(@ModelAttribute DiarySortForm diarySortForm, @ModelAttribute @Validated DiarySearchForm diarySearchForm, BindingResult bindingResult, Model model, HttpSession session) {
+        if (!diaryService.checkLogin("teacher")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "teacher", "commentManage", "コメント管理");
 
         //selectBoxのoptionの値を設定
         Map<String, String> selectColMap = diaryService.createSelectBoxOptionCol(key, value);
@@ -80,15 +71,15 @@ public class DiaryManageController {
             List<Diary> diaryList = diaryService.fetchSortDiaryList("insert_date", "desc", "diaryManage");
             model.addAttribute("diaryList", diaryList);
 
-            return "student/main";
+            return "teacher/main";
         }
 
         String searchWord = diarySearchForm.getSearchWord();
 
         //検索した日誌リスト取得
-        List<Diary> diaryList = diaryService.fetchSearchDiaryList(searchWord, "diaryManage");
+        List<Diary> diaryList = diaryService.fetchSearchDiaryList(searchWord, "commentManage");
         model.addAttribute("diaryList", diaryList);
 
-        return "student/main";
+        return "teacher/main";
     }
 }

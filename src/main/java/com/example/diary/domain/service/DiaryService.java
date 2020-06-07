@@ -22,8 +22,8 @@ public class DiaryService {
     @Autowired
     HttpSession session;
 
-    public boolean checkLogin() {
-        if (session.getAttribute("student") == null) {
+    public boolean checkLogin(String sessionName) {
+        if (session.getAttribute(sessionName) == null) {
             System.out.println("ログインチェックエラー");
             return false;
         }
@@ -40,6 +40,10 @@ public class DiaryService {
             isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
 
         } else if (fromWhere.equals("diaryDisplay")) {
+            String[] allowedCol = {"insert_date", "student_id", "good_point", "bad_point", "student_comment", "teacher_comment"};
+            isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
+
+        } else if (fromWhere.endsWith("commentManage")) {
             String[] allowedCol = {"insert_date", "student_id", "good_point", "bad_point", "student_comment", "teacher_comment"};
             isAllow = hasAllowedValue(sortOptionCol, allowedCol, sortOptionOrder, allowedOrder);
         }
@@ -114,8 +118,8 @@ public class DiaryService {
         return diary;
     }
 
-    public void addContentsAndTitle(Model model, String contents, String title) {
-        model.addAttribute("contents", "student/" + contents + " :: " + contents + "_contents");
+    public void addContentsAndTitle(Model model, String role, String contents, String title) {
+        model.addAttribute("contents", role + "/" + contents + " :: " + contents + "_contents");
         model.addAttribute("title", title);
     }
 }

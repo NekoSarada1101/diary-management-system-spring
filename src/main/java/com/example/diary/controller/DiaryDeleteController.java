@@ -18,16 +18,16 @@ public class DiaryDeleteController {
 
     @PostMapping("/diaryDeleteCheck")
     public String postDiaryDeleteCheck(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryDeleteCheck", "日誌削除確認");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryDeleteCheck", "日誌削除確認");
 
         return "student/main";
     }
 
     @PostMapping("/diaryDeleteComplete")
     public String postDiaryDeleteComplete(@ModelAttribute StudentDiaryForm studentDiaryForm, HttpSession session, Model model) {
-        if (!diaryService.checkLogin()) return "sessionError";
-        diaryService.addContentsAndTitle(model, "diaryDeleteComplete", "日誌削除完了");
+        if (!diaryService.checkLogin("student")) return "sessionError";
+        diaryService.addContentsAndTitle(model, "student", "diaryDeleteComplete", "日誌削除完了");
 
         int row = diaryService.deleteDiary(diaryService.setDiaryClass(studentDiaryForm, session));
         System.out.println(row);
