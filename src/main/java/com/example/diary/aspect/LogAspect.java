@@ -42,8 +42,7 @@ public class LogAspect {
         for (int i = 0; i < values.length; i++) {
             System.out.println(names[i] + " = " + values[i]);
         }
-
-        System.out.println();
+        System.out.println("戻り値= " + joinPoint.proceed());
 
         try {
             Object result = joinPoint.proceed();
