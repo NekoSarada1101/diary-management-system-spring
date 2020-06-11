@@ -15,9 +15,10 @@
       <form action="/teacherMenu" method="get" class="col-6 text-left mb-3">
         <button type="submit" class="btn btn-outline-dark btn-lg btn-block">戻る</button>
       </form>
+      <br>
 
       <!--ソート-->
-      <form action="/commentManage" method="post" th:object="${diarySortForm}" class="row mb-3">
+      <form action="/commentManage" method="post" th:object="${diarySortForm}" class="row col-12 mb-3">
         <select th:field="*{sortOptionCol}" class="col-5 custom-select m-0">
           <option th:each="items:${sortOptionCol}" th:value="${items.key}" th:text="${items.value}"></option>
         </select>
@@ -30,7 +31,7 @@
       </form>
 
       <!--検索-->
-      <form action="/commentManageSearch" method="post" th:object="${diarySearchForm}" class="row form-group mb-3">
+      <form action="/commentManageSearch" method="post" th:object="${diarySearchForm}" class="row col-12 form-group mb-3">
         <input type="text" th:field="*{searchWord}" placeholder="検索したいワードを入力してください" class="col-10 form-control m-0" required>
         <button type="submit" class="col-2 btn btn-primary m-0">検索</button>
         <span th:if="${#fields.hasErrors('searchWord')}" th:errors="*{searchWord}" class="text-danger"></span>
