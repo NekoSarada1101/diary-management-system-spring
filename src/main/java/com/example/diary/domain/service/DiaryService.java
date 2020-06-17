@@ -109,7 +109,7 @@ public class DiaryService {
     public Diary setDiaryClass(DiaryForm diaryForm, HttpSession session) {
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate(studentDiaryForm.getInsertDate());
+        diary.setInsertDate((String) session.getAttribute("today"));
         diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
         diary.setGoodPoint(diaryForm.getGoodPoint());
         diary.setBadPoint(diaryForm.getBadPoint());
