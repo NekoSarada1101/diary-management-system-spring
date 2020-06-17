@@ -1,8 +1,8 @@
 package com.example.diary.controller;
 
 import com.example.diary.domain.model.Diary;
+import com.example.diary.domain.model.DiaryForm;
 import com.example.diary.domain.model.GroupOrder;
-import com.example.diary.domain.model.StudentDiaryForm;
 import com.example.diary.domain.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class DiaryUpdateController {
     DiaryService diaryService;
 
     @PostMapping("/diaryUpdateInput")
-    public String postDiaryUpdateInput(@ModelAttribute StudentDiaryForm studentDiaryForm, Model model, HttpSession session) {
+    public String postDiaryUpdateInput(@ModelAttribute DiaryForm diaryForm, Model model, HttpSession session) {
         if (!diaryService.checkLogin("student")) return "sessionError";
         diaryService.addContentsAndTitle(model, "student", "diaryUpdateInput", "日誌修正入力");
 
@@ -38,14 +38,14 @@ public class DiaryUpdateController {
     }
 
     @PostMapping("/diaryUpdateCheck")
-    public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) StudentDiaryForm studentDiaryForm, BindingResult bindingResult, Model model, HttpSession session) {
+    public String postDiaryUpdateCheck(@ModelAttribute @Validated(GroupOrder.class) DiaryForm diaryForm, BindingResult bindingResult, Model model, HttpSession session) {
         if (!diaryService.checkLogin("student")) return "sessionError";
         if (bindingResult.hasErrors()) {
-            return postDiaryUpdateInput(studentDiaryForm, model, session);
+            return postDiaryUpdateInput(diaryForm, model, session);
         }
         diaryService.addContentsAndTitle(model, "student", "diaryUpdateCheck", "日誌修正確認");
 
-        session.setAttribute("diary", diaryService.setDiaryClass(studentDiaryForm, session));
+        session.setAttribute("diary", diaryService.setDiaryClass(diaryForm, session));
 
         return "student/main";
     }
