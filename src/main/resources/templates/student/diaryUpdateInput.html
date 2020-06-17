@@ -9,7 +9,7 @@
   <div class="col-10 col-md-6 col-lg-4 center">
     <h3 class="text-center mb-5">日誌修正入力</h3>
 
-    <form action="/diaryUpdateCheck" method="post" th:object="${studentDiaryForm}">
+    <form action="/diaryUpdateCheck" method="post" th:object="${diaryForm}">
       <div class="form-group">
         <label for="insertDate">登録日</label>
         <p id="insertDate" th:text="*{insertDate}"></p>

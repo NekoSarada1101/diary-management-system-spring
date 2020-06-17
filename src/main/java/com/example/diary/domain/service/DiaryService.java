@@ -2,7 +2,7 @@ package com.example.diary.domain.service;
 
 import com.example.diary.domain.model.Diary;
 import com.example.diary.domain.model.Student;
-import com.example.diary.domain.model.StudentDiaryForm;
+import com.example.diary.domain.model.DiaryForm;
 import com.example.diary.domain.repository.DiaryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,14 +106,15 @@ public class DiaryService {
         return selectOrderMap;
     }
 
-    public Diary setDiaryClass(StudentDiaryForm studentDiaryForm, HttpSession session) {
+    public Diary setDiaryClass(DiaryForm diaryForm, HttpSession session) {
         Diary diary = new Diary();
         diary.setClassCode(((Student) session.getAttribute("student")).getClassCode());
-        diary.setInsertDate(studentDiaryForm.getInsertDate());
+        diary.setInsertDate((String) session.getAttribute("today"));
         diary.setStudentId(((Student) session.getAttribute("student")).getStudentId());
-        diary.setGoodPoint(studentDiaryForm.getGoodPoint());
-        diary.setBadPoint(studentDiaryForm.getBadPoint());
-        diary.setStudentComment(studentDiaryForm.getStudentComment());
+        diary.setGoodPoint(diaryForm.getGoodPoint());
+        diary.setBadPoint(diaryForm.getBadPoint());
+        diary.setStudentComment(diaryForm.getStudentComment());
+        diary.setTeacherComment(diaryForm.getTeacherComment());
 
         return diary;
     }

@@ -65,8 +65,13 @@
         </tr>
 
         <tr>
-          <td class="col-12 text-center" colspan="2" th:object="${teacherCommentForm}">
-            <form action="/diaryUpdateInput" method="post">
+          <td class="col-12 text-center" colspan="2">
+            <form action="/commentUpdateInput" method="post" th:object="${diaryForm}">
+              <input type="hidden" name="insertDate" th:value="${diary.insertDate}">
+              <input type="hidden" name="classCode" th:value="${diary.classCode}">
+              <input type="hidden" name="goodPoint" th:value="${diary.goodPoint}">
+              <input type="hidden" name="badPoint" th:value="${diary.badPoint}">
+              <input type="hidden" name="studentComment" th:value="${diary.studentComment}">
               <input type="hidden" name="teacherComment" th:value="${diary.teacherComment}">
               <button type="submit" class="col-4 btn btn-warning text-dark">更新</button>
             </form>

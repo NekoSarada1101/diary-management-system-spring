@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>コメント更新入力</title>
+</head>
+<body>
+<div th:fragment="commentUpdateInput_contents">
+  <div class="col-10 col-md-6 col-lg-4 center">
+    <h3 class="text-center mb-5">コメント更新入力</h3>
+
+    <form action="/commentUpdateCheck" method="post" th:object="${diaryForm}">
+      <table class="table table-bordered table-striped">
+        <tr class="row">
+          <th class="col-4">登録日</th>
+          <td class="col-8" th:text="*{insertDate}"></td>
+          <input type="hidden" name="insertDate" th:value="*{insertDate}">
+        </tr>
+        <tr class="row">
+          <th class="col-4">良い点</th>
+          <td class="col-8" th:text="*{goodPoint}"></td>
+          <input type="hidden" name="goodPoint" th:value="*{goodPoint}">
+        </tr>
+        <tr class="row">
+          <th class="col-4">悪い点</th>
+          <td class="col-8" th:text="*{badPoint}"></td>
+          <input type="hidden" name="badPoint" th:value="*{badPoint}">
+        </tr>
+        <tr class="row">
+          <th class="col-4">学生コメント</th>
+          <td class="col-8" th:text="*{studentComment}"></td>
+          <input type="hidden" name="studentComment" th:value="*{studentComment}">
+        </tr>
+      </table>
+
+      <div th:classappend="${#fields.hasErrors('teacherComment')}?'has-error'" class="form-group">
+        <label for="teacherComment"><strong>教員コメント</strong></label>
+        <textarea id="teacherComment" th:field="*{teacherComment}" cols="10" rows="3" maxlength="30" class="form-control" required></textarea>
+        <span th:if="${#fields.hasErrors('teacherComment')}" th:errors="*{teacherComment}" class="text-danger"></span>
+      </div>
+
+      <input type="hidden" name="classCode" th:value="*{classCode}">
+      <button type="submit" class="col-5 btn btn-primary btn-lg mx-auto mb-2 float-right">更新する</button>
+    </form>
+
+    <form action="/commentManage" method="post">
+      <button type="submit" class="col-5 btn btn-outline-dark btn-lg mx-auto float-left">戻る</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
