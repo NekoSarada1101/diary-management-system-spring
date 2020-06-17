@@ -106,10 +106,11 @@ public class DiaryDaoJdbcImpl implements DiaryDao {
 
     //更新
     public int updateDiary(Diary diary) throws DataAccessException {
-        int row = jdbcTemplate.update("UPDATE diary SET good_point = ?, bad_point = ?, student_comment = ? WHERE insert_date = ? AND class_code = ?",
+        int row = jdbcTemplate.update("UPDATE diary SET good_point = ?, bad_point = ?, student_comment = ?, teacher_comment = ? WHERE insert_date = ? AND class_code = ?",
                 diary.getGoodPoint(),
                 diary.getBadPoint(),
                 diary.getStudentComment(),
+                diary.getTeacherComment(),
                 diary.getInsertDate(),
                 diary.getClassCode());
 
