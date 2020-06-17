@@ -26,14 +26,7 @@ public class DiaryInsertController {
         if (!diaryService.checkLogin("student")) return "sessionError";
         diaryService.addContentsAndTitle(model, "student", "diaryInsertInput", "日誌登録入力");
 
-        try {
-            studentDiaryForm.setInsertDate((String) session.getAttribute("today"));
-            studentDiaryForm.setGoodPoint(((Diary) session.getAttribute("diary")).getGoodPoint());
-            studentDiaryForm.setBadPoint(((Diary) session.getAttribute("diary")).getBadPoint());
-            studentDiaryForm.setStudentComment(((Diary) session.getAttribute("diary")).getStudentComment());
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
+        diaryForm.setInsertDate((String) session.getAttribute("today"));
 
         return "student/main";
     }

@@ -25,15 +25,6 @@ public class DiaryUpdateController {
         if (!diaryService.checkLogin("student")) return "sessionError";
         diaryService.addContentsAndTitle(model, "student", "diaryUpdateInput", "日誌修正入力");
 
-        try {
-            studentDiaryForm.setInsertDate(((Diary) session.getAttribute("diary")).getInsertDate());
-            studentDiaryForm.setGoodPoint(((Diary) session.getAttribute("diary")).getGoodPoint());
-            studentDiaryForm.setBadPoint(((Diary) session.getAttribute("diary")).getBadPoint());
-            studentDiaryForm.setStudentComment(((Diary) session.getAttribute("diary")).getStudentComment());
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
-
         return "student/main";
     }
 
