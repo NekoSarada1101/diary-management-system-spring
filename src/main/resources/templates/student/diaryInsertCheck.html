@@ -32,7 +32,10 @@
       <button type="submit" class="col-5 btn btn-primary btn-lg mx-auto mb-2 float-right">登録する</button>
     </form>
 
-    <form action="/diaryInsertInput" method="get">
+    <form action="/diaryInsertInput" method="get" th:object="${diaryForm}">
+      <input type="hidden" name="goodPoint" th:value="*{goodPoint}">
+      <input type="hidden" name="badPoint" th:value="*{badPoint}">
+      <input type="hidden" name="studentComment" th:value="*{studentComment}">
       <button type="submit" class="col-5 btn btn-outline-dark btn-lg mx-auto float-left">戻る</button>
     </form>
   </div>
